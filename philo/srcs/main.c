@@ -1,12 +1,20 @@
 #include "philo.h"
 
+int64_t
+	get_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL))
+		return (-1);
+	return (time.tv_sec * (int64_t)1000 + time.tv_usec / 1000);
+}
+
 void
 	print(t_philo *philo, enum e_status status)
 {
-	struct timeval	time;
-	char			*msg;
+	char	*msg;
 
-	gettimeofday(&time, NULL);
 	msg = "is died";
 	if (status == ST_EAT)
 		msg = "is eating";
@@ -14,7 +22,7 @@ void
 		msg = "is sleeping";
 	else if (status == ST_THINK)
 		msg = "is thinking";
-	printf("%d %d %s\n", time.tv_usec, philo->id, msg);
+	printf("%llu %d %s\n", get_time(), philo->id, msg);
 }
 
 static void
@@ -144,7 +152,6 @@ int
 			return (1);
 		}
 	}
-	puts("make mutex done.");
 
 	i = -1;
 	while (++i < info->num_of_philo)

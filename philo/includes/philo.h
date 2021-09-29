@@ -24,7 +24,7 @@ typedef struct s_info
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				number_of_times_each_philosopher_must_eat;
+	int				num_must_eat;
 	pthread_mutex_t	*fork_lock;
 	pthread_mutex_t	print_lock;
 }	t_info;
@@ -40,7 +40,6 @@ typedef struct s_philo
 }	t_philo;
 
 /* utils.c */
-long	ft_atol(const char *str);
-int		ft_atoi(const char *str);
+bool	ft_philo_atoi(const char *str, int *n);
 
 #endif

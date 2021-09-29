@@ -91,18 +91,24 @@ void
 	return (NULL);
 }
 
-static void
-	set_info(t_info *info, int argc, char **argv)
+static bool
+	set_info(t_info **info, int argc, char **argv)
 {
-	memset(info, 0, sizeof(t_info));
-	info->num_of_philo = ft_atoi(argv[1]);
-	info->time_to_die = ft_atoi(argv[2]);
-	info->time_to_eat = ft_atoi(argv[3]);
-	info->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
+	*info = (t_info *)malloc(sizeof(t_info));
+	if (!*info)
+		return (false);
+	memset(*info, 0, sizeof(t_info));
+	if (!ft_philo_atoi(argv[1], &(*info)->num_of_philo)
+		|| !ft_philo_atoi(argv[2], &(*info)->time_to_die)
+		|| !ft_philo_atoi(argv[3], &(*info)->time_to_eat)
+		|| !ft_philo_atoi(argv[4], &(*info)->time_to_sleep))
 	{
-		// TODO:
+		return (false);
 	}
+	if (argc == 6
+		&& !ft_philo_atoi(argv[5], &(*info)->num_must_eat))
+		return (false);
+	return (true);
 }
 
 int
@@ -112,20 +118,14 @@ int
 	t_philo	*philos;
 	int		err;
 
-	if (argc != 5 && argc != 6)
+	if ((argc != 5 && argc != 6) || !set_info(&info, argc, argv))
 		return (1);
-	// TODO: valid_arg
-	info = (t_info *)malloc(sizeof(t_info));
-	if (!info)
-		return (1);
-	set_info(info, argc, argv);
 	err = pthread_mutex_init(&info->print_lock, NULL);
 	if (err != 0)
 	{
 		free(info);
 		return (1);
 	}
-	printf("philo num %d\n", info->num_of_philo);
 	info->fork_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * info->num_of_philo);
 	if (!info->fork_lock)
 	{

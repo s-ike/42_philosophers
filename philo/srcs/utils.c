@@ -13,37 +13,28 @@ static int
 		|| c == '\f' || c == '\t' || c == '\v');
 }
 
-long
-	ft_atol(const char *str)
+bool
+	ft_philo_atoi(const char *str, int *n)
 {
-	unsigned long long	num;
-	int					sign;
+	unsigned int	num;
 
 	num = 0;
-	sign = 1;
 	while (is_space(*str))
 		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
+	if (*str == '-')
+		return (false);
+	else if (*str == '+')
 		str++;
-	}
-	while (ft_isdigit(*str))
+	while (*str)
 	{
+		if (!ft_isdigit(*str))
+			return (false);
 		num = (num * 10) + (*str++ - '0');
-		if (num >> 63)
-		{
-			if (sign == -1)
-				return (-__LONG_MAX__ - 1);
-			return (__LONG_MAX__);
-		}
+		if (__INT_MAX__ < num)
+			return (false);
 	}
-	return (num * sign);
-}
-
-int
-	ft_atoi(const char *str)
-{
-	return ((int)ft_atol(str));
+	if (num == 0)
+		return (false);
+	*n = (int)num;
+	return (true);
 }

@@ -1,13 +1,13 @@
 #include "philo.h"
 
-int64_t
+long long
 	get_time(void)
 {
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL))
 		return (-1);
-	return (time.tv_sec * (int64_t)1000 + time.tv_usec / 1000);
+	return (time.tv_sec * 1000LL + time.tv_usec / 1000LL);
 }
 
 void
@@ -72,7 +72,8 @@ void
 
 	philo = philo_p;
 	gettimeofday(&time, NULL);
-	printf("%d %d comming! num of philo: %d\n", time.tv_usec, philo->id, philo->info->num_of_philo);
+	printf("%d %d comming! num of philo: %d\n",
+		(int)time.tv_usec, philo->id, philo->info->num_of_philo);
 	while (philo->is_dead == false)
 	{
 		pthread_mutex_lock(&philo->info->fork_lock[philo->id - 1]);
@@ -92,7 +93,7 @@ void
 }
 
 static bool
-	set_info(t_info **info, int argc, char **argv)
+	init_info(t_info **info, int argc, char **argv)
 {
 	*info = (t_info *)malloc(sizeof(t_info));
 	if (!*info)
@@ -105,9 +106,108 @@ static bool
 	{
 		return (false);
 	}
-	if (argc == 6
-		&& !ft_philo_atoi(argv[5], &(*info)->num_must_eat))
+	if (argc == 6 && !ft_philo_atoi(argv[5], &(*info)->num_must_eat))
 		return (false);
+	(*info)->fork_lock = (pthread_mutex_t *)malloc(
+		sizeof(pthread_mutex_t) * (*info)->num_of_philo);
+	if (!(*info)->fork_lock)
+	{
+		free(*info);
+		return (false);
+	}
+	return (true);
+}
+
+static bool
+	init_philos(t_info **info, t_philo **philos)
+{
+	*philos = (t_philo *)malloc(sizeof(t_philo) * (*info)->num_of_philo);
+	if (!*philos)
+	{
+		free((*info)->fork_lock);
+		free(*info);
+		return (false);
+	}
+	return (true);
+}
+
+static bool
+	init_mutex(t_info **info, t_philo **philos)
+{
+	int	err;
+	int	i;
+
+	if (pthread_mutex_init(&(*info)->print_lock, NULL) != 0)
+	{
+		free((*info)->fork_lock);
+		free(*info);
+		free(*philos);
+		return (false);
+	}
+	i = -1;
+	while (++i < (*info)->num_of_philo)
+	{
+		err = pthread_mutex_init(&(*info)->fork_lock[i], NULL);
+		if (err != 0)
+		{
+			pthread_mutex_destroy(&(*info)->print_lock);
+			while (0 <= i)
+				pthread_mutex_destroy(&(*info)->fork_lock[i--]);
+			free((*info)->fork_lock);
+			free(*info);
+			free(*philos);
+			return (false);
+		}
+	}
+	return (true);
+}
+
+static void
+	destroy_mutex(t_info *info)
+{
+	int	i;
+
+	pthread_mutex_destroy(&info->print_lock);
+	i = -1;
+	while (++i < info->num_of_philo)
+		pthread_mutex_destroy(&info->fork_lock[i]);
+}
+
+static bool
+	start_philos(t_info **info, t_philo **philos)
+{
+	int	err;
+	int	i;
+
+	i = -1;
+	while (++i < (*info)->num_of_philo)
+	{
+		(*philos)[i].id = i + 1;
+		(*philos)[i].is_dead = false;
+		(*philos)[i].info = *info;
+		err = pthread_create(&(*philos)[i].thread, NULL, philo, (void *)&(*philos)[i]);
+		if (err != 0)
+		{
+			destroy_mutex(*info);
+			free((*info)->fork_lock);
+			free(*info);
+			free(*philos);
+			return (false);
+		}
+	}
+	i = -1;
+	while (++i < (*info)->num_of_philo)
+	{
+		err = pthread_join((*philos)[i].thread, NULL);
+		if (err != 0)
+		{
+			destroy_mutex(*info);
+			free((*info)->fork_lock);
+			free(*info);
+			free(*philos);
+			return (false);
+		}
+	}
 	return (true);
 }
 
@@ -116,73 +216,16 @@ int
 {
 	t_info	*info;
 	t_philo	*philos;
-	int		err;
 
-	if ((argc != 5 && argc != 6) || !set_info(&info, argc, argv))
+	if ((argc != 5 && argc != 6)
+		|| !init_info(&info, argc, argv)
+		|| !init_philos(&info, &philos)
+		|| !init_mutex(&info, &philos)
+		|| !start_philos(&info, &philos))
 		return (1);
-	err = pthread_mutex_init(&info->print_lock, NULL);
-	if (err != 0)
-	{
-		free(info);
-		return (1);
-	}
-	info->fork_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * info->num_of_philo);
-	if (!info->fork_lock)
-	{
-		free(info);
-		return (1);
-	}
-	philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
-	if (!philos)
-	{
-		free(info->fork_lock);
-		free(info);
-		return (1);
-	}
-	int	i;
-
-	i = -1;
-	while (++i < info->num_of_philo)
-	{
-		err = pthread_mutex_init(&info->fork_lock[i], NULL);
-		if (err != 0)
-		{
-			free(info->fork_lock);
-			free(philos);
-			return (1);
-		}
-	}
-
-	i = -1;
-	while (++i < info->num_of_philo)
-	{
-		if (err != 0)
-		{
-			free(info->fork_lock);
-			free(philos);
-			return (1);
-		}
-		philos[i].id = i + 1;
-		philos[i].is_dead = false;
-		philos[i].info = info;
-		err = pthread_create(&philos[i].thread, NULL, philo, (void *)&philos[i]);
-		if (err != 0)
-		{
-			free(info->fork_lock);
-			free(philos);
-			return (1);
-		}
-	}
-	i = -1;
-	while (++i < info->num_of_philo)
-	{
-		err = pthread_join(philos[i].thread, NULL);
-		if (err != 0)
-		{
-			free(info->fork_lock);
-			free(philos);
-			return (1);
-		}
-	}
+	destroy_mutex(info);
+	free(info->fork_lock);
+	free(info);
+	free(philos);
 	return (0);
 }

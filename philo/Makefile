@@ -9,7 +9,7 @@ OBJS		:= $(SRCS:.c=.o)
 INCLUDE 	:= -I./includes/
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror -pthread
 
 DEBUG		:= -g
 ifdef LEAKS

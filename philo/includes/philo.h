@@ -39,6 +39,8 @@ typedef struct s_philo
 	// pthread_mutex_t	status_lock;
 }	t_philo;
 
+/* terminate.c */
+int		ft_terminate(t_info *info, t_philo *philos, bool should_destroy, int ret);
 /* utils.c */
 bool	ft_philo_atoi(const char *str, int *n);
 

@@ -2,6 +2,7 @@ NAME		:= philo
 
 SRCDIR		:= ./srcs/
 SRCS		:= main.c \
+				terminate.c \
 				utils.c
 SRCS		:= $(addprefix $(SRCDIR), $(SRCS))
 OBJS		:= $(SRCS:.c=.o)
@@ -43,4 +44,8 @@ fclean:		clean
 
 re:			fclean $(NAME)
 
+leaks:
+			$(MAKE) CFLAGS="$(CFLAGS) -D LEAKS=1" LEAKS=TRUE
+
 .PHONY:		all clean fclean re bonus
+.PHONY:		leaks

@@ -88,7 +88,6 @@ void
 	}
 	if (philo->is_dead)
 		printf("%d dead", philo->id);
-	fflush(stdout);
 	return (NULL);
 }
 
@@ -134,49 +133,27 @@ static bool
 static bool
 	init_mutex(t_info **info, t_philo **philos)
 {
-	int	err;
 	int	i;
 
 	if (pthread_mutex_init(&(*info)->print_lock, NULL) != 0)
-	{
-		free((*info)->fork_lock);
-		free(*info);
-		free(*philos);
-		return (false);
-	}
+		return (ft_terminate(*info, *philos, false, (int)false));
 	i = -1;
 	while (++i < (*info)->num_of_philo)
 	{
-		err = pthread_mutex_init(&(*info)->fork_lock[i], NULL);
-		if (err != 0)
+		if (pthread_mutex_init(&(*info)->fork_lock[i], NULL))
 		{
 			pthread_mutex_destroy(&(*info)->print_lock);
 			while (0 <= i)
 				pthread_mutex_destroy(&(*info)->fork_lock[i--]);
-			free((*info)->fork_lock);
-			free(*info);
-			free(*philos);
-			return (false);
+			return (ft_terminate(*info, *philos, false, (int)false));
 		}
 	}
 	return (true);
 }
 
-static void
-	destroy_mutex(t_info *info)
-{
-	int	i;
-
-	pthread_mutex_destroy(&info->print_lock);
-	i = -1;
-	while (++i < info->num_of_philo)
-		pthread_mutex_destroy(&info->fork_lock[i]);
-}
-
 static bool
 	start_philos(t_info **info, t_philo **philos)
 {
-	int	err;
 	int	i;
 
 	i = -1;
@@ -185,28 +162,14 @@ static bool
 		(*philos)[i].id = i + 1;
 		(*philos)[i].is_dead = false;
 		(*philos)[i].info = *info;
-		err = pthread_create(&(*philos)[i].thread, NULL, philo, (void *)&(*philos)[i]);
-		if (err != 0)
-		{
-			destroy_mutex(*info);
-			free((*info)->fork_lock);
-			free(*info);
-			free(*philos);
-			return (false);
-		}
+		if (pthread_create(&(*philos)[i].thread, NULL, philo, (void *)&(*philos)[i]))
+			return (ft_terminate(*info, *philos, true, (int)false));
 	}
 	i = -1;
 	while (++i < (*info)->num_of_philo)
 	{
-		err = pthread_join((*philos)[i].thread, NULL);
-		if (err != 0)
-		{
-			destroy_mutex(*info);
-			free((*info)->fork_lock);
-			free(*info);
-			free(*philos);
-			return (false);
-		}
+		if (pthread_join((*philos)[i].thread, NULL))
+			return (ft_terminate(*info, *philos, true, (int)false));
 	}
 	return (true);
 }
@@ -223,9 +186,5 @@ int
 		|| !init_mutex(&info, &philos)
 		|| !start_philos(&info, &philos))
 		return (1);
-	destroy_mutex(info);
-	free(info->fork_lock);
-	free(info);
-	free(philos);
-	return (0);
+	return (ft_terminate(info, philos, true, 0));
 }

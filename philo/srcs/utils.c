@@ -1,25 +1,12 @@
 #include "philo.h"
 
-static int
-	ft_isdigit(int c)
-{
-	return ('0' <= c && c <= '9');
-}
-
-static int
-	is_space(char c)
-{
-	return (c == ' ' || c == '\n' || c == '\r'
-		|| c == '\f' || c == '\t' || c == '\v');
-}
-
 bool
 	ft_philo_atoi(const char *str, int *n)
 {
 	unsigned int	num;
 
 	num = 0;
-	while (is_space(*str))
+	while (ft_isspace(*str))
 		str++;
 	if (*str == '-')
 		return (false);

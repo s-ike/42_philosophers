@@ -142,68 +142,87 @@ void
 }
 
 static bool
-	can_init_info(t_info **info, int argc, char **argv)
-{
-	*info = (t_info *)malloc(sizeof(t_info));
-	if (!*info)
-		return (false);
-	memset(*info, 0, sizeof(t_info));
-	if (!ft_philo_atoi(argv[1], &(*info)->num_of_philo)
-		|| !ft_philo_atoi(argv[2], &(*info)->time_to_die)
-		|| !ft_philo_atoi(argv[3], &(*info)->time_to_eat)
-		|| !ft_philo_atoi(argv[4], &(*info)->time_to_sleep))
-	{
-		free(*info);
-		return (false);
-	}
-	if (argc == OPTIONAL_ARGC
-		&& !ft_philo_atoi(argv[5], &(*info)->num_must_eat))
-	{
-		free(*info);
-		return (false);
-	}
-	(*info)->fork_lock = (pthread_mutex_t *)malloc(
-		sizeof(pthread_mutex_t) * (*info)->num_of_philo);
-	if (!(*info)->fork_lock)
-	{
-		free(*info);
-		return (false);
-	}
-	return (true);
-}
-
-static bool
-	init_philos(t_info **info, t_philo **philos)
-{
-	*philos = (t_philo *)malloc(sizeof(t_philo) * (*info)->num_of_philo);
-	if (!*philos)
-	{
-		free((*info)->fork_lock);
-		free(*info);
-		return (false);
-	}
-	return (true);
-}
-
-static bool
-	init_mutex(t_info **info, t_philo **philos)
+	is_valid_arg_nums(int argc, const char **argv)
 {
 	int	i;
 
-	if (pthread_mutex_init(&(*info)->print_lock, NULL) != 0)
-		return (ft_terminate(*info, *philos, false, (int)false));
-	i = -1;
-	while (++i < (*info)->num_of_philo)
+	i = 1;
+	while (i < argc)
 	{
-		if (pthread_mutex_init(&(*info)->fork_lock[i], NULL))
+		if (!ft_isnumeric(argv[i])
+			|| ft_isover_intrange(argv[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+static void
+	set_args_to_info(t_info *info, int argc, const char **argv)
+{
+	info->num_of_philo = ft_atoi(argv[1]);
+	info->time_to_die = ft_atoi(argv[2]);
+	info->time_to_eat = ft_atoi(argv[3]);
+	info->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == OPTIONAL_ARGC)
+		info->num_must_eat = ft_atoi(argv[5]);
+}
+
+static bool
+	is_succeeded_init_fork_locks(t_info *info)
+{
+	info->fork_lock = (pthread_mutex_t *)malloc(
+		sizeof(pthread_mutex_t) * info->num_of_philo);
+	if (!info->fork_lock)
+		return (false);
+	return (true);
+}
+
+static bool
+	is_succeeded_init_mutex(t_info *info)
+{
+	int	i;
+
+	if (pthread_mutex_init(&info->print_lock, NULL))
+		return (false);
+	i = -1;
+	while (++i < info->num_of_philo)
+	{
+		if (pthread_mutex_init(&info->fork_lock[i], NULL))
 		{
-			pthread_mutex_destroy(&(*info)->print_lock);
+			pthread_mutex_destroy(&info->print_lock);
 			while (0 <= i)
-				pthread_mutex_destroy(&(*info)->fork_lock[i--]);
-			return (ft_terminate(*info, *philos, false, (int)false));
+				pthread_mutex_destroy(&info->fork_lock[i--]);
+			return (false);
 		}
 	}
 	return (true);
+}
+
+t_info
+	*init_info(int argc, const char **argv)
+{
+	const bool	valid_args = is_valid_arg_nums(argc, argv);
+	t_info		*info;
+
+	if (!valid_args)
+		return (NULL);
+	info = (t_info *)malloc(sizeof(t_info));
+	if (!info)
+		return (NULL);
+	memset(info, 0, sizeof(t_info));
+	set_args_to_info(info, argc, argv);
+	if (is_succeeded_init_fork_locks(info)
+		&& is_succeeded_init_mutex(info))
+		return (info);
+	free(info);
+	return (NULL);
+}
+
+t_philo
+	*init_philos(const t_info *info)
+{
+	return ((t_philo *)malloc(sizeof(t_philo) * info->num_of_philo));
 }
 
 static bool
@@ -235,11 +254,18 @@ int
 	t_info	*info;
 	t_philo	*philos;
 
-	if ((argc != REQUIRED_ARGC && argc != OPTIONAL_ARGC)
-		|| !can_init_info(&info, argc, argv)
-		|| !init_philos(&info, &philos)
-		|| !init_mutex(&info, &philos)
-		|| !start_philos(&info, &philos))
+	if (argc != REQUIRED_ARGC && argc != OPTIONAL_ARGC)
+		return (FAILURE);
+	info = init_info(argc, (const char **)argv);
+	if (!info)
+		return (FAILURE);
+	philos = init_philos(info);
+	if (!philos)
+	{
+		free(info);
+		return (FAILURE);
+	}
+	if (!start_philos(&info, &philos))
 		return (1);
 	return (ft_terminate(info, philos, true, 0));
 }

@@ -3,7 +3,12 @@ NAME		:= philo
 SRCDIR		:= ./srcs/
 SRCS		:= main.c \
 				terminate.c \
-				utils.c
+				utils.c \
+				utils/ft_atoi.c \
+				utils/ft_isdigit.c \
+				utils/ft_isnumeric.c \
+				utils/ft_isover_intrange.c \
+				utils/ft_isspace.c
 SRCS		:= $(addprefix $(SRCDIR), $(SRCS))
 OBJS		:= $(SRCS:.c=.o)
 

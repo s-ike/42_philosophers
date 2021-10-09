@@ -8,6 +8,8 @@
 # include <string.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include "utils.h"
+# include "t_status.h"
 
 # define REQUIRED_ARGC 5
 # define OPTIONAL_ARGC 6

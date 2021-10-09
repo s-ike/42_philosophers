@@ -2,8 +2,8 @@ NAME		:= philo
 
 SRCDIR		:= ./srcs/
 SRCS		:= main.c \
+				init_info.c \
 				terminate.c \
-				utils.c \
 				utils/ft_atoi.c \
 				utils/ft_isdigit.c \
 				utils/ft_isnumeric.c \

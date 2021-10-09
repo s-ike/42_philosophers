@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/09 15:59:44 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/09 16:03:41 by sikeda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHIOL_H
 # define PHIOL_H
 
@@ -5,16 +17,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
-# include <string.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include "init_info.h"
+# include "philo_def.h"
 # include "utils.h"
 # include "t_status.h"
+# include "t_info.h"
 
-# define REQUIRED_ARGC 5
-# define OPTIONAL_ARGC 6
-
-enum e_status
+enum e_philo_status
 {
 	ST_EAT,
 	ST_SLEEP,
@@ -22,17 +33,6 @@ enum e_status
 	ST_DIE,
 	ST_END
 };
-
-typedef struct s_info
-{
-	int				num_of_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				num_must_eat;
-	pthread_mutex_t	*fork_lock;
-	pthread_mutex_t	print_lock;
-}	t_info;
 
 typedef struct s_philo
 {
@@ -46,7 +46,5 @@ typedef struct s_philo
 
 /* terminate.c */
 int		ft_terminate(t_info *info, t_philo *philos, bool should_destroy, int ret);
-/* utils.c */
-bool	ft_philo_atoi(const char *str, int *n);
 
 #endif

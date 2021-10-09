@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_status.h                                         :+:      :+:    :+:   */
+/*   init_info.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:51 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/09 15:59:51 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/09 16:02:32 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_STATUS_H
-# define T_STATUS_H
+#ifndef INIT_INFO_H
+# define INIT_INFO_H
 
-typedef enum e_status
-{
-	SUCCESS,
-	FAILURE,
-}	t_status;
+# include <stdlib.h>
+# include <string.h>
+# include "utils.h"
+# include "t_info.h"
+
+t_info	*init_info(int argc, const char **argv);
 
 #endif

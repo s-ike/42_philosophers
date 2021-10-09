@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_status.h                                         :+:      :+:    :+:   */
+/*   t_info.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:51 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/09 15:59:51 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/09 15:59:47 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/09 15:59:48 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_STATUS_H
-# define T_STATUS_H
+#ifndef T_INFO_H
+# define T_INFO_H
 
-typedef enum e_status
+# include <pthread.h>
+# include "philo_def.h"
+
+typedef struct s_info
 {
-	SUCCESS,
-	FAILURE,
-}	t_status;
+	int				num_of_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_must_eat;
+	pthread_mutex_t	*fork_lock;
+	pthread_mutex_t	print_lock;
+}	t_info;
 
 #endif

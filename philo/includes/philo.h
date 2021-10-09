@@ -9,6 +9,9 @@
 # include <stdbool.h>
 # include <sys/time.h>
 
+# define REQUIRED_ARGC 5
+# define OPTIONAL_ARGC 6
+
 enum e_status
 {
 	ST_EAT,

@@ -1,13 +1,23 @@
 #include "philo.h"
 
 long long
-	get_time(void)
+	get_mstime(void)
 {
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL))
 		return (-1);
 	return (time.tv_sec * 1000LL + time.tv_usec / 1000LL);
+}
+
+long long
+	get_microtime(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL))
+		return (-1);
+	return (time.tv_sec * 1000000LL + time.tv_usec);
 }
 
 void
@@ -22,7 +32,47 @@ void
 		msg = "is sleeping";
 	else if (status == ST_THINK)
 		msg = "is thinking";
-	printf("%llu %d %s\n", get_time(), philo->id, msg);
+	printf("%llu %d %s\n", get_mstime(), philo->id, msg);
+}
+
+// static bool
+// 	ft_usleep(int time)
+// {
+// 	long long	crnt_tstamp;
+// 	long long	end_tstamp;
+
+// 	crnt_tstamp = get_microtime();
+// 	if (crnt_tstamp == -1)
+// 		return (false);
+// 	end_tstamp = crnt_tstamp + time * 1000LL;
+// 	while (crnt_tstamp < end_tstamp)
+// 	{
+// 		usleep(200);
+// 		crnt_tstamp = get_microtime();
+// 		if (crnt_tstamp == -1)
+// 			return (false);
+// 	}
+// 	return (true);
+// }
+
+static bool
+	ft_usleep(int time)
+{
+	long long	crnt_tstamp;
+	long long	end_tstamp;
+
+	crnt_tstamp = get_mstime();
+	if (crnt_tstamp == -1)
+		return (false);
+	end_tstamp = crnt_tstamp + time;
+	while (crnt_tstamp < end_tstamp)
+	{
+		usleep(500);
+		crnt_tstamp = get_mstime();
+		if (crnt_tstamp == -1)
+			return (false);
+	}
+	return (true);
 }
 
 static void
@@ -32,9 +82,9 @@ static void
 	print(philo, status);
 	pthread_mutex_unlock(&philo->info->print_lock);
 	if (status == ST_EAT)
-		usleep(philo->info->time_to_eat * 1000);
+		ft_usleep(philo->info->time_to_eat);
 	else if (status == ST_SLEEP)
-		usleep(philo->info->time_to_sleep * 1000);
+		ft_usleep(philo->info->time_to_sleep);
 }
 
 void
@@ -92,7 +142,7 @@ void
 }
 
 static bool
-	init_info(t_info **info, int argc, char **argv)
+	can_init_info(t_info **info, int argc, char **argv)
 {
 	*info = (t_info *)malloc(sizeof(t_info));
 	if (!*info)
@@ -103,10 +153,15 @@ static bool
 		|| !ft_philo_atoi(argv[3], &(*info)->time_to_eat)
 		|| !ft_philo_atoi(argv[4], &(*info)->time_to_sleep))
 	{
+		free(*info);
 		return (false);
 	}
-	if (argc == 6 && !ft_philo_atoi(argv[5], &(*info)->num_must_eat))
+	if (argc == OPTIONAL_ARGC
+		&& !ft_philo_atoi(argv[5], &(*info)->num_must_eat))
+	{
+		free(*info);
 		return (false);
+	}
 	(*info)->fork_lock = (pthread_mutex_t *)malloc(
 		sizeof(pthread_mutex_t) * (*info)->num_of_philo);
 	if (!(*info)->fork_lock)
@@ -180,8 +235,8 @@ int
 	t_info	*info;
 	t_philo	*philos;
 
-	if ((argc != 5 && argc != 6)
-		|| !init_info(&info, argc, argv)
+	if ((argc != REQUIRED_ARGC && argc != OPTIONAL_ARGC)
+		|| !can_init_info(&info, argc, argv)
 		|| !init_philos(&info, &philos)
 		|| !init_mutex(&info, &philos)
 		|| !start_philos(&info, &philos))

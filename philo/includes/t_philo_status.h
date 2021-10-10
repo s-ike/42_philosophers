@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   t_philo_status.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 11:05:30 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 14:36:38 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/10 14:47:50 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/10 14:47:50 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "time.h"
+#ifndef T_PHILO_STATUS_H
+# define T_PHILO_STATUS_H
 
-t_time
-	get_mstime(void)
+typedef enum e_philo_status
 {
-	struct timeval	time;
+	ST_EAT,
+	ST_SLEEP,
+	ST_THINK,
+	ST_DIE,
+	ST_END
+}	t_philo_status;
 
-	if (gettimeofday(&time, NULL))
-		return (-1);
-	return (time.tv_sec * 1000LL + time.tv_usec / 1000LL);
-}
-
-t_time
-	get_microtime(void)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL))
-		return (-1);
-	return (time.tv_sec * 1000000LL + time.tv_usec);
-}
+#endif

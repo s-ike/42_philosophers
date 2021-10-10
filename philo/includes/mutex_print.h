@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   mutex_print.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 11:05:30 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 14:36:38 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/10 14:48:24 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/10 14:48:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "time.h"
+#ifndef MUTEX_PRINT_H
+# define MUTEX_PRINT_H
 
-t_time
-	get_mstime(void)
-{
-	struct timeval	time;
+# include <stdio.h>
+# include "time.h"
+# include "t_philo_status.h"
+# include "t_philo.h"
 
-	if (gettimeofday(&time, NULL))
-		return (-1);
-	return (time.tv_sec * 1000LL + time.tv_usec / 1000LL);
-}
+void	ft_mutex_print(t_philo *philo, t_philo_status status);
 
-t_time
-	get_microtime(void)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL))
-		return (-1);
-	return (time.tv_sec * 1000000LL + time.tv_usec);
-}
+#endif

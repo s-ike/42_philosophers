@@ -6,26 +6,11 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 12:40:32 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 14:49:49 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "start_philos.h"
-
-void
-	print(t_philo *philo, enum e_philo_status status)
-{
-	char	*msg;
-
-	msg = "is died";
-	if (status == ST_EAT)
-		msg = "is eating";
-	else if (status == ST_SLEEP)
-		msg = "is sleeping";
-	else if (status == ST_THINK)
-		msg = "is thinking";
-	printf("%llu %d %s\n", get_mstime(), philo->id, msg);
-}
 
 // static bool
 // 	ft_usleep(int time)
@@ -68,11 +53,9 @@ static bool
 }
 
 static void
-	ph_do(t_philo *philo, enum e_philo_status status)
+	ph_do(t_philo *philo, t_philo_status status)
 {
-	pthread_mutex_lock(&philo->info->print_lock);
-	print(philo, status);
-	pthread_mutex_unlock(&philo->info->print_lock);
+	ft_mutex_print(philo, status);
 	if (status == ST_EAT)
 		ft_usleep(philo->info->time_to_eat);
 	else if (status == ST_SLEEP)

@@ -4,6 +4,7 @@ SRCDIR		:= ./srcs/
 SRCS		:= main.c \
 				init_info.c \
 				init_philos.c \
+				mutex_print.c \
 				start_philos.c \
 				terminate.c \
 				time.c \

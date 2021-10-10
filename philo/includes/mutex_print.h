@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 14:48:24 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 14:48:24 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 15:29:03 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include "time.h"
+# include "def_color.h"
 # include "t_philo_status.h"
 # include "t_philo.h"
 

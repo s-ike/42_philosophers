@@ -16,7 +16,7 @@ SRCS		:= main.c \
 SRCS		:= $(addprefix $(SRCDIR), $(SRCS))
 OBJS		:= $(SRCS:.c=.o)
 
-INCLUDE 	:= -I./includes/
+INCLUDE 	:= -I./includes/ -I./includes/defs/ -I./includes/types/
 
 CC			:= gcc
 CFLAGS		:= -Wall -Wextra -Werror -pthread

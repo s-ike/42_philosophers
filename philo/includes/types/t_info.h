@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:47 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/09 15:59:48 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 15:22:43 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define T_INFO_H
 
 # include <pthread.h>
-# include "philo_def.h"
+# include "def_philo.h"
 
 typedef struct s_info
 {

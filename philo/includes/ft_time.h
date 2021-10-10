@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philos.h                                      :+:      :+:    :+:   */
+/*   ft_time.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 16:26:13 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/10 11:02:01 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/10 16:24:49 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_PHILOS_H
-# define INIT_PHILOS_H
+#ifndef FT_TIME_H
+# define FT_TIME_H
 
+# include <unistd.h>
 # include <stdlib.h>
-# include "t_info.h"
-# include "t_philo.h"
+# include <sys/time.h>
+# include <stdbool.h>
+# include "t_time.h"
 
-t_philo	*ft_init_philos(t_info *info);
+t_time	ft_get_mstime(void);
+t_time	ft_get_microtime(void);
+bool	ft_usleep(int usleep_time);
 
 #endif

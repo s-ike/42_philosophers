@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.h                                             :+:      :+:    :+:   */
+/*   t_time.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 11:02:01 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 14:36:18 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/10 16:24:28 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/10 16:24:29 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TIME_H
-# define TIME_H
-
-# include <stdlib.h>
-# include <sys/time.h>
+#ifndef T_TIME_H
+# define T_TIME_H
 
 typedef long long t_time;
-
-t_time	get_mstime(void);
-t_time	get_microtime(void);
 
 #endif

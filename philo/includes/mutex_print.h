@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 14:48:24 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 15:29:03 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 16:22:14 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define MUTEX_PRINT_H
 
 # include <stdio.h>
-# include "time.h"
+# include "ft_time.h"
 # include "def_color.h"
 # include "t_philo_status.h"
 # include "t_philo.h"
 
-void	ft_mutex_print(t_philo *philo, t_philo_status status);
+void	ft_mutex_print(t_philo *philo, t_philo_status status, t_time time);
 
 #endif

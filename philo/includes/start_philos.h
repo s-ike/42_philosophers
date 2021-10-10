@@ -6,18 +6,17 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 10:56:42 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 14:53:00 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 16:22:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef START_PHILOS_H
 # define START_PHILOS_H
 
-# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include "mutex_print.h"
-# include "time.h"
+# include "ft_time.h"
 # include "t_info.h"
 # include "t_philo_status.h"
 # include "t_philo.h"

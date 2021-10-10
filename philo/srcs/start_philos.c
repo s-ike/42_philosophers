@@ -6,56 +6,16 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 14:49:49 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 16:17:17 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "start_philos.h"
 
-// static bool
-// 	ft_usleep(int time)
-// {
-// 	long long	crnt_tstamp;
-// 	long long	end_tstamp;
-
-// 	crnt_tstamp = get_microtime();
-// 	if (crnt_tstamp == -1)
-// 		return (false);
-// 	end_tstamp = crnt_tstamp + time * 1000LL;
-// 	while (crnt_tstamp < end_tstamp)
-// 	{
-// 		usleep(200);
-// 		crnt_tstamp = get_microtime();
-// 		if (crnt_tstamp == -1)
-// 			return (false);
-// 	}
-// 	return (true);
-// }
-
-static bool
-	ft_usleep(int time)
-{
-	long long	crnt_tstamp;
-	long long	end_tstamp;
-
-	crnt_tstamp = get_mstime();
-	if (crnt_tstamp == -1)
-		return (false);
-	end_tstamp = crnt_tstamp + time;
-	while (crnt_tstamp < end_tstamp)
-	{
-		usleep(500);
-		crnt_tstamp = get_mstime();
-		if (crnt_tstamp == -1)
-			return (false);
-	}
-	return (true);
-}
-
 static void
-	ph_do(t_philo *philo, t_philo_status status)
+	ph_do(t_philo *philo, t_philo_status status, t_time crnt_time)
 {
-	ft_mutex_print(philo, status);
+	ft_mutex_print(philo, status, crnt_time);
 	if (status == ST_EAT)
 		ft_usleep(philo->info->time_to_eat);
 	else if (status == ST_SLEEP)
@@ -65,40 +25,43 @@ static void
 void
 	ph_eat(t_philo *philo)
 {
-	ph_do(philo, ST_EAT);
+	philo->last_eat = ft_get_mstime();
+	ph_do(philo, ST_EAT, philo->last_eat);
 }
 
 void
 	ph_sleep(t_philo *philo)
 {
-	ph_do(philo, ST_SLEEP);
+	const t_time	crnt_time = ft_get_mstime();
+
+	ph_do(philo, ST_SLEEP, crnt_time);
 }
 
 void
 	ph_think(t_philo *philo)
 {
-	ph_do(philo, ST_THINK);
+	const t_time	crnt_time = ft_get_mstime();
+
+	ph_do(philo, ST_THINK, crnt_time);
 }
 
 void
 	ph_died(t_philo *philo)
 {
-	if (philo->id == 5)
+	const t_time	crnt_time = ft_get_mstime();
+
+	if (philo->info->time_to_die < crnt_time - philo->last_eat)
 		philo->is_dead = true;
 	if (philo->is_dead)
-		ph_do(philo, ST_DIE);
+		ph_do(philo, ST_DIE, crnt_time);
 }
-# include <sys/time.h>
+
 void
 	*philo(void *philo_p)
 {
-	t_philo			*philo;
-	struct timeval	time;
+	t_philo	*philo;
 
 	philo = philo_p;
-	gettimeofday(&time, NULL);
-	printf("%d %d comming! num of philo: %d\n",
-		(int)time.tv_usec, philo->id, philo->info->num_of_philo);
 	while (philo->is_dead == false)
 	{
 		pthread_mutex_lock(&philo->info->fork_lock[philo->id - 1]);
@@ -111,8 +74,6 @@ void
 		ph_think(philo);
 		ph_died(philo);
 	}
-	if (philo->is_dead)
-		printf("%d dead", philo->id);
 	return (NULL);
 }
 

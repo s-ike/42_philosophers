@@ -153,13 +153,13 @@ static bool
 		(*philos)[i].is_dead = false;
 		(*philos)[i].info = *info;
 		if (pthread_create(&(*philos)[i].thread, NULL, philo, (void *)&(*philos)[i]))
-			return (ft_terminate(*info, *philos, true, (int)false));
+			return (false);
 	}
 	i = -1;
 	while (++i < (*info)->num_of_philo)
 	{
 		if (pthread_join((*philos)[i].thread, NULL))
-			return (ft_terminate(*info, *philos, true, (int)false));
+			return (false);
 	}
 	return (true);
 }
@@ -169,6 +169,7 @@ int
 {
 	t_info	*info;
 	t_philo	*philos;
+	bool	successed;
 
 	if (argc != REQUIRED_ARGC && argc != OPTIONAL_ARGC)
 		return (FAILURE);
@@ -181,7 +182,9 @@ int
 		free(info);
 		return (FAILURE);
 	}
-	if (!start_philos(&info, &philos))
-		return (1);
-	return (ft_terminate(info, philos, true, 0));
+	successed = start_philos(&info, &philos);
+	ft_terminate(info, philos);
+	if (successed)
+		return (0);
+	return (1);
 }

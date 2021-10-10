@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "terminate.h"
 
 #ifdef LEAKS
 
@@ -26,13 +26,11 @@ static void
 		pthread_mutex_destroy(&info->fork_lock[i]);
 }
 
-int
-	ft_terminate(t_info *info, t_philo *philos, bool should_destroy, int ret)
+void
+	ft_terminate(t_info *info, t_philo *philos)
 {
-	if (should_destroy)
-		destroy_all_mutex(info);
+	destroy_all_mutex(info);
 	free(info->fork_lock);
 	free(info);
 	free(philos);
-	return (ret);
 }

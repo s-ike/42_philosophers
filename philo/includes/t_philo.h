@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   t_philo.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:44 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 09:27:06 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/10 09:26:27 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/10 09:27:28 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHIOL_H
-# define PHIOL_H
+#ifndef T_PHILO_H
+# define T_PHILO_H
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <pthread.h>
 # include <stdbool.h>
-# include <sys/time.h>
-# include "init_info.h"
-# include "philo_def.h"
-# include "terminate.h"
-# include "utils.h"
-# include "t_status.h"
 # include "t_info.h"
-# include "t_philo.h"
 
-enum e_philo_status
+typedef struct s_philo
 {
-	ST_EAT,
-	ST_SLEEP,
-	ST_THINK,
-	ST_DIE,
-	ST_END
-};
+	int				id;
+	pthread_t		thread;
+	bool			is_dead;
+	t_info			*info;
+	// enum e_status	status;
+	// pthread_mutex_t	status_lock;
+}	t_philo;
 
 #endif

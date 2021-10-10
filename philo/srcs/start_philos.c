@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 11:34:19 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 12:40:32 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,16 +134,13 @@ void
 }
 
 t_status
-	start_philos(t_info *info, t_philo *philos)
+	ft_start_philos(t_info *info, t_philo *philos)
 {
 	int	i;
 
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
-		philos[i].id = i + 1;
-		philos[i].is_dead = false;
-		philos[i].info = info;
 		if (pthread_create(&philos[i].thread, NULL, philo, (void *)&philos[i]))
 			return (FAILURE);
 	}

@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_info.h                                        :+:      :+:    :+:   */
+/*   init_philos.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 12:01:30 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 12:41:04 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_INFO_H
-# define INIT_INFO_H
+#ifndef INIT_PHILOS_H
+# define INIT_PHILOS_H
 
-# include <stdlib.h>
-# include <string.h>
-# include "utils.h"
 # include "t_info.h"
+# include "t_philo.h"
 
-t_info	*ft_init_info(int argc, const char **argv);
+t_philo	*ft_init_philos(t_info *info);
 
 #endif

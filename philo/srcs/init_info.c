@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/09 16:03:02 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 12:01:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static bool
 }
 
 t_info
-	*init_info(int argc, const char **argv)
+	*ft_init_info(int argc, const char **argv)
 {
 	const bool	valid_args = is_valid_arg_nums(argc, argv);
 	t_info		*info;

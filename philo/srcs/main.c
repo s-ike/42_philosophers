@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 10:54:55 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 10:54:56 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 11:31:43 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int
 	main(int argc, char **argv)
 {
-	t_info	*info;
-	t_philo	*philos;
-	bool	successed;
+	t_info		*info;
+	t_philo		*philos;
+	t_status	successed;
 
 	if (argc != REQUIRED_ARGC && argc != OPTIONAL_ARGC)
 		return (EXIT_FAILURE);
@@ -33,7 +33,7 @@ int
 	successed = start_philos(&info, &philos);
 	ft_terminate_info(info);
 	ft_terminate_philos(philos);
-	if (successed)
+	if (successed == SUCCESS)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }

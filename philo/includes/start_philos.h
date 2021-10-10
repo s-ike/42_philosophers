@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 10:56:42 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 11:04:04 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 11:31:15 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "time.h"
 # include "t_info.h"
 # include "t_philo.h"
+# include "t_status.h"
 
 enum e_philo_status
 {
@@ -29,6 +30,6 @@ enum e_philo_status
 	ST_END
 };
 
-bool	start_philos(t_info **info, t_philo **philos);
+t_status	start_philos(t_info **info, t_philo **philos);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_philos.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/10 11:30:58 by sikeda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "start_philos.h"
 
 void
@@ -121,7 +133,7 @@ void
 	return (NULL);
 }
 
-bool
+t_status
 	start_philos(t_info **info, t_philo **philos)
 {
 	int	i;
@@ -133,13 +145,13 @@ bool
 		(*philos)[i].is_dead = false;
 		(*philos)[i].info = *info;
 		if (pthread_create(&(*philos)[i].thread, NULL, philo, (void *)&(*philos)[i]))
-			return (false);
+			return (FAILURE);
 	}
 	i = -1;
 	while (++i < (*info)->num_of_philo)
 	{
 		if (pthread_join((*philos)[i].thread, NULL))
-			return (false);
+			return (FAILURE);
 	}
-	return (true);
+	return (SUCCESS);
 }

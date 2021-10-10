@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 16:44:59 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/11 00:14:08 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,28 @@ void
 {
 	if (philo->is_dead)
 		ph_do(philo, ST_DIE, crnt_time);
+}
+
+void
+	ph_take_fork(t_philo *philo, int fork_id)
+{
+	t_time	crnt_time;
+
+	if (philo->is_dead)
+		return ;
+	pthread_mutex_lock(&philo->info->fork_lock[fork_id]);
+	crnt_time = ft_get_mstime();
+	if (check_if_dead(philo, crnt_time))
+		ph_died(philo, crnt_time);
+	else
+		ph_do(philo, ST_FORK, crnt_time);
+}
+
+void
+	ph_drop_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(&philo->info->fork_lock[philo->id - 1]);
+	pthread_mutex_unlock(&philo->info->fork_lock[philo->id % philo->info->num_of_philo]);;
 }
 
 void
@@ -86,17 +108,25 @@ void
 void
 	*philo(void *philo_p)
 {
-	t_philo	*philo;
+	const t_philo	*const_philo = philo_p;
+	const int		left_fork_id = const_philo->id - 1;
+	const int		right_fork_id = const_philo->id % const_philo->info->num_of_philo;
+	t_philo			*philo;
 
-	philo = philo_p;
+	philo = (t_philo *)const_philo;
 	philo->last_eat = ft_get_mstime();
 	while (philo->is_dead == false)
 	{
-		pthread_mutex_lock(&philo->info->fork_lock[philo->id - 1]);
-		pthread_mutex_lock(&philo->info->fork_lock[philo->id % philo->info->num_of_philo]);
+		if (philo->id % 2)
+			ph_take_fork(philo, left_fork_id);
+		else
+			ph_take_fork(philo, right_fork_id);
+		if (philo->id % 2)
+			ph_take_fork(philo, right_fork_id);
+		else
+			ph_take_fork(philo, left_fork_id);
 		ph_eat(philo);
-		pthread_mutex_unlock(&philo->info->fork_lock[philo->id - 1]);
-		pthread_mutex_unlock(&philo->info->fork_lock[philo->id % philo->info->num_of_philo]);
+		ph_drop_forks(philo);
 		ph_sleep(philo);
 		ph_think(philo);
 	}

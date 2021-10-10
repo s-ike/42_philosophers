@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 16:17:23 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/10 23:08:42 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static void
 	char			*msg;
 
 	msg = COLOR_RED"is died"COLOR_RESET;
-	if (status == ST_EAT)
+	if (status == ST_FORK)
+		msg = "has taken a fork";
+	else if (status == ST_EAT)
 		msg = COLOR_GREEN"is eating"COLOR_RESET;
 	else if (status == ST_SLEEP)
 		msg = COLOR_BLUE"is sleeping"COLOR_RESET;

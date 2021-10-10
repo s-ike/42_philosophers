@@ -3,7 +3,9 @@ NAME		:= philo
 SRCDIR		:= ./srcs/
 SRCS		:= main.c \
 				init_info.c \
+				start_philos.c \
 				terminate.c \
+				time.c \
 				utils/ft_atoi.c \
 				utils/ft_isdigit.c \
 				utils/ft_isnumeric.c \

@@ -179,11 +179,12 @@ int
 	philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
 	if (!philos)
 	{
-		free(info);
+		ft_terminate_info(info);
 		return (FAILURE);
 	}
 	successed = start_philos(&info, &philos);
-	ft_terminate(info, philos);
+	ft_terminate_info(info);
+	ft_terminate_philos(philos);
 	if (successed)
 		return (0);
 	return (1);

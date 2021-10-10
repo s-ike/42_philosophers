@@ -16,7 +16,7 @@ void
 #endif
 
 static void
-	destroy_all_mutex(t_info *info)
+	destroy_all_info_mutex(t_info *info)
 {
 	int	i;
 
@@ -27,10 +27,15 @@ static void
 }
 
 void
-	ft_terminate(t_info *info, t_philo *philos)
+	ft_terminate_info(t_info *info)
 {
-	destroy_all_mutex(info);
+	destroy_all_info_mutex(info);
 	free(info->fork_lock);
 	free(info);
+}
+
+void
+	ft_terminate_philos(t_philo *philos)
+{
 	free(philos);
 }

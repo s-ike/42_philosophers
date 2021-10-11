@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/11 22:32:39 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/11 23:05:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ void
 void
 	ph_drop_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->info->fork_lock[philo->id - 1]);
-	pthread_mutex_unlock(&philo->info->fork_lock[philo->id % philo->info->num_of_philo]);;
+	const int	left_fork_id = philo->id - 1;
+	const int	right_fork_id = philo->id % philo->info->num_of_philo;
+
+	pthread_mutex_unlock(&philo->info->fork_lock[left_fork_id]);
+	pthread_mutex_unlock(&philo->info->fork_lock[right_fork_id]);
 }
 
 void

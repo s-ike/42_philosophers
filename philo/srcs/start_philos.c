@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/11 00:14:08 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/11 22:32:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ bool
 	check_if_dead(t_philo *philo, t_time crnt_time)
 {
 	if (philo->info->time_to_die < crnt_time - philo->last_eat)
-	{
-		philo->is_dead = true;
 		return (true);
-	}
 	return (false);
 }
 
@@ -37,7 +34,7 @@ static void
 void
 	ph_died(t_philo *philo, t_time crnt_time)
 {
-	if (philo->is_dead)
+	if (philo->info->someone_is_dead == false)
 		ph_do(philo, ST_DIE, crnt_time);
 }
 
@@ -46,7 +43,7 @@ void
 {
 	t_time	crnt_time;
 
-	if (philo->is_dead)
+	if (philo->info->someone_is_dead)
 		return ;
 	pthread_mutex_lock(&philo->info->fork_lock[fork_id]);
 	crnt_time = ft_get_mstime();
@@ -68,7 +65,7 @@ void
 {
 	const t_time	crnt_time = ft_get_mstime();
 
-	if (philo->is_dead)
+	if (philo->info->someone_is_dead)
 		return ;
 	if (check_if_dead(philo, crnt_time))
 		ph_died(philo, crnt_time);
@@ -84,7 +81,7 @@ void
 {
 	const t_time	crnt_time = ft_get_mstime();
 
-	if (philo->is_dead)
+	if (philo->info->someone_is_dead)
 		return ;
 	if (check_if_dead(philo, crnt_time))
 		ph_died(philo, crnt_time);
@@ -97,7 +94,7 @@ void
 {
 	const t_time	crnt_time = ft_get_mstime();
 
-	if (philo->is_dead)
+	if (philo->info->someone_is_dead)
 		return ;
 	if (check_if_dead(philo, crnt_time))
 		ph_died(philo, crnt_time);
@@ -115,7 +112,7 @@ void
 
 	philo = (t_philo *)const_philo;
 	philo->last_eat = ft_get_mstime();
-	while (philo->is_dead == false)
+	while (philo->info->someone_is_dead == false)
 	{
 		if (philo->id % 2)
 			ph_take_fork(philo, left_fork_id);

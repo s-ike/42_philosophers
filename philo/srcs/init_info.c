@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 12:01:24 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/11 22:21:30 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_info
 	if (!info)
 		return (NULL);
 	memset(info, 0, sizeof(t_info));
+	info->someone_is_dead = false;
 	set_args_to_info(info, argc, argv);
 	if (is_succeeded_init_fork_locks(info)
 		&& is_succeeded_init_mutex(info))

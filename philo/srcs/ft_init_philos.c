@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 12:00:38 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 12:43:52 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 18:09:44 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_philo	*ft_init_philos(t_info *info)
 	while (i < info->num_of_philo)
 	{
 		philos[i].id = i + 1;
+		philos[i].is_complete_eating = false;
+		philos[i].eat_cnt = 0;
 		philos[i].last_eat = 0;
 		philos[i].info = info;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 17:48:41 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 17:49:10 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void
 	info->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == OPTIONAL_ARGC)
 		info->num_must_eat = ft_atoi(argv[5]);
+	else
+		info->num_must_eat = NO_OPTION;
 }
 
 static bool

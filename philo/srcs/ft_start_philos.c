@@ -15,7 +15,7 @@
 bool
 	check_if_dead(t_philo *philo, t_time crnt_time)
 {
-	if (philo->info->time_to_die < crnt_time - philo->last_eat)
+	if (philo->info->time_to_die <= crnt_time - philo->last_eat)
 		return (true);
 	return (false);
 }

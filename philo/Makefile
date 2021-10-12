@@ -12,8 +12,8 @@ SRCS		:= main.c \
 				ft_utils/ft_isdigit.c \
 				ft_utils/ft_iseven.c \
 				ft_utils/ft_isnumeric.c \
-				ft_utils/ft_isodd.c \
 				ft_utils/ft_isover_intrange.c \
+				ft_utils/ft_ispositive.c \
 				ft_utils/ft_isspace.c
 SRCS		:= $(addprefix $(SRCDIR), $(SRCS))
 OBJS		:= $(SRCS:.c=.o)

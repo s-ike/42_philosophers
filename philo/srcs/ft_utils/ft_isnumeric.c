@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 09:58:01 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 17:07:55 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 17:38:47 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int
 {
 	if (!str || *str == '\0')
 		return (0);
+	if (*str == '+' || *str == '-')
+		str++;
 	if (!ft_isdigit(*str))
 		return (0);
 	while (*str)

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 12:43:42 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 17:48:41 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ static void
 	info->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == OPTIONAL_ARGC)
 		info->num_must_eat = ft_atoi(argv[5]);
+}
+
+static bool
+	is_positive_nums(const t_info *info, int argc)
+{
+	if (!ft_ispositive(info->num_of_philo)
+		|| !ft_ispositive(info->time_to_die)
+		|| !ft_ispositive(info->time_to_eat)
+		|| !ft_ispositive(info->time_to_sleep))
+		return (false);
+	if (argc == OPTIONAL_ARGC
+		&& !ft_ispositive(info->num_must_eat))
+		return (false);
+	return (true);
 }
 
 static bool
@@ -84,7 +98,8 @@ t_info
 	memset(info, 0, sizeof(t_info));
 	info->someone_is_dead = false;
 	set_args_to_info(info, argc, argv);
-	if (is_succeeded_init_fork_locks(info)
+	if (is_positive_nums(info, argc)
+		&& is_succeeded_init_fork_locks(info)
 		&& is_succeeded_init_mutex(info))
 		return (info);
 	free(info);

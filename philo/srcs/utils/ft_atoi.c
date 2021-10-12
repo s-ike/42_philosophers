@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 03:08:50 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/09 10:03:40 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 11:18:46 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 long	ft_atol(const char *str)
 {
-	unsigned long long	num;
-	int					sign;
+	uint64_t	num;
+	int			sign;
 
 	num = 0;
 	sign = 1;

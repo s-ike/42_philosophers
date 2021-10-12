@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/11 23:05:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 11:11:27 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ bool
 static void
 	ph_do(t_philo *philo, t_philo_status status, t_time crnt_time)
 {
+	if (status != ST_DIE && check_if_dead(philo, crnt_time))
+		return ;
 	// TODO: printを別スレッドで行う実験
 	ft_mutex_print(philo, status, crnt_time);
 	if (status == ST_EAT)
@@ -47,10 +49,7 @@ void
 		return ;
 	pthread_mutex_lock(&philo->info->fork_lock[fork_id]);
 	crnt_time = ft_get_mstime();
-	if (check_if_dead(philo, crnt_time))
-		ph_died(philo, crnt_time);
-	else
-		ph_do(philo, ST_FORK, crnt_time);
+	ph_do(philo, ST_FORK, crnt_time);
 }
 
 void
@@ -70,13 +69,8 @@ void
 
 	if (philo->info->someone_is_dead)
 		return ;
-	if (check_if_dead(philo, crnt_time))
-		ph_died(philo, crnt_time);
-	else
-	{
-		philo->last_eat = crnt_time;
-		ph_do(philo, ST_EAT, philo->last_eat);
-	}
+	philo->last_eat = crnt_time;
+	ph_do(philo, ST_EAT, philo->last_eat);
 }
 
 void
@@ -86,10 +80,7 @@ void
 
 	if (philo->info->someone_is_dead)
 		return ;
-	if (check_if_dead(philo, crnt_time))
-		ph_died(philo, crnt_time);
-	else
-		ph_do(philo, ST_SLEEP, crnt_time);
+	ph_do(philo, ST_SLEEP, crnt_time);
 }
 
 void
@@ -99,10 +90,27 @@ void
 
 	if (philo->info->someone_is_dead)
 		return ;
-	if (check_if_dead(philo, crnt_time))
-		ph_died(philo, crnt_time);
-	else
-		ph_do(philo, ST_THINK, crnt_time);
+	ph_do(philo, ST_THINK, crnt_time);
+}
+
+void
+	*ft_monitor(void *philo_p)
+{
+	t_philo	*philo;
+	t_time	crnt_time;
+
+	philo = (t_philo *)philo_p;
+	// TODO: 検証
+	usleep(500);
+	while (true)
+	{
+		crnt_time = ft_get_mstime();
+		if (check_if_dead(philo, crnt_time))
+			break ;
+		usleep(500);
+	}
+	ph_died(philo, crnt_time);
+	return (NULL);
 }
 
 void
@@ -112,16 +120,21 @@ void
 	const int		left_fork_id = const_philo->id - 1;
 	const int		right_fork_id = const_philo->id % const_philo->info->num_of_philo;
 	t_philo			*philo;
+	pthread_t		monitor;
 
 	philo = (t_philo *)const_philo;
+	if (pthread_create(&monitor, NULL, ft_monitor, philo_p))
+		return (NULL);
+	if (pthread_detach(monitor))
+		return (NULL);
 	philo->last_eat = ft_get_mstime();
 	while (philo->info->someone_is_dead == false)
 	{
-		if (philo->id % 2)
+		if (ft_isodd(philo->id))
 			ph_take_fork(philo, left_fork_id);
 		else
 			ph_take_fork(philo, right_fork_id);
-		if (philo->id % 2)
+		if (ft_isodd(philo->id))
 			ph_take_fork(philo, right_fork_id);
 		else
 			ph_take_fork(philo, left_fork_id);

@@ -2,18 +2,18 @@ NAME		:= philo
 
 SRCDIR		:= ./srcs/
 SRCS		:= main.c \
-				init_info.c \
-				init_philos.c \
-				mutex_print.c \
-				start_philos.c \
-				terminate.c \
-				time.c \
-				utils/ft_atoi.c \
-				utils/ft_isdigit.c \
-				utils/ft_isnumeric.c \
-				utils/ft_isodd.c \
-				utils/ft_isover_intrange.c \
-				utils/ft_isspace.c
+				ft_init_info.c \
+				ft_init_philos.c \
+				ft_mutex_print.c \
+				ft_start_philos.c \
+				ft_terminate.c \
+				ft_time.c \
+				ft_utils/ft_atoi.c \
+				ft_utils/ft_isdigit.c \
+				ft_utils/ft_isnumeric.c \
+				ft_utils/ft_isodd.c \
+				ft_utils/ft_isover_intrange.c \
+				ft_utils/ft_isspace.c
 SRCS		:= $(addprefix $(SRCDIR), $(SRCS))
 OBJS		:= $(SRCS:.c=.o)
 

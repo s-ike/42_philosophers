@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_info.c                                        :+:      :+:    :+:   */
+/*   ft_init_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/11 22:21:30 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 12:43:42 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init_info.h"
+#include "ft_init_info.h"
 
 static bool
 	is_valid_arg_nums(int argc, const char **argv)

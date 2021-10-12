@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
+/*   ft_init_philos.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 09:58:01 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/09 10:04:52 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/10 12:00:38 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/12 12:43:52 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "ft_init_philos.h"
 
-int
-	ft_isnumeric(const char *str)
+t_philo	*ft_init_philos(t_info *info)
 {
-	if (!str || *str == '\0')
-		return (0);
-	if (*str == '+' || *str == '-')
-		str++;
-	if (!ft_isdigit(*str))
-		return (0);
-	while (*str)
+	t_philo	*philos;
+	int		i;
+
+	if (info->num_of_philo == 0)
+		return (NULL);
+	philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
+	if (!philos)
+		return (NULL);
+	i = 0;
+	while (i < info->num_of_philo)
 	{
-		if (!ft_isdigit(*str++))
-			return (0);
+		philos[i].id = i + 1;
+		philos[i].last_eat = 0;
+		philos[i].info = info;
+		i++;
 	}
-	return (1);
+	return (philos);
 }

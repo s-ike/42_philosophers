@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:54 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 11:10:43 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/09 09:58:01 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/12 12:43:23 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "ft_utils.h"
 
-# include <stdint.h>
-# include <stdbool.h>
-
-long	ft_atol(const char *str);
-int		ft_atoi(const char *str);
-int		ft_isdigit(int c);
-int		ft_isnumeric(const char *str);
-int		ft_isodd(int n);
-int		ft_isover_intrange(const char *str);
-int		ft_isspace(char c);
-
-#endif
+int
+	ft_isnumeric(const char *str)
+{
+	if (!str || *str == '\0')
+		return (0);
+	if (*str == '+' || *str == '-')
+		str++;
+	if (!ft_isdigit(*str))
+		return (0);
+	while (*str)
+	{
+		if (!ft_isdigit(*str++))
+			return (0);
+	}
+	return (1);
+}

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_philos.c                                     :+:      :+:    :+:   */
+/*   ft_start_philos.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 11:11:27 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 12:40:52 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "start_philos.h"
+#include "ft_start_philos.h"
 
 bool
 	check_if_dead(t_philo *philo, t_time crnt_time)

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 10:54:55 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 15:34:43 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 12:44:17 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "t_info.h"
 #include "t_philo.h"
 #include "t_status.h"
-#include "init_info.h"
-#include "init_philos.h"
-#include "start_philos.h"
-#include "terminate.h"
+#include "ft_init_info.h"
+#include "ft_init_philos.h"
+#include "ft_start_philos.h"
+#include "ft_terminate.h"
 
 int
 	main(int argc, char **argv)

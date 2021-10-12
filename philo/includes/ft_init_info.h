@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philos.c                                      :+:      :+:    :+:   */
+/*   ft_init_info.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 12:00:38 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/11 22:21:03 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/12 12:41:48 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init_philos.h"
+#ifndef FT_INIT_INFO_H
+# define FT_INIT_INFO_H
 
-t_philo	*ft_init_philos(t_info *info)
-{
-	t_philo	*philos;
-	int		i;
+# include <stdlib.h>
+# include <string.h>
+# include "ft_utils.h"
+# include "t_info.h"
 
-	if (info->num_of_philo == 0)
-		return (NULL);
-	philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
-	if (!philos)
-		return (NULL);
-	i = 0;
-	while (i < info->num_of_philo)
-	{
-		philos[i].id = i + 1;
-		philos[i].last_eat = 0;
-		philos[i].info = info;
-		i++;
-	}
-	return (philos);
-}
+t_info	*ft_init_info(int argc, const char **argv);
+
+#endif

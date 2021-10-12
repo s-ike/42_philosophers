@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutex_print.c                                      :+:      :+:    :+:   */
+/*   ft_mutex_print.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 11:15:22 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 12:40:33 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mutex_print.h"
+#include "ft_mutex_print.h"
 
 static void
 	print(t_philo *philo, t_philo_status status, t_time time)

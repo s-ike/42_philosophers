@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 23:06:15 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 23:25:13 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,8 @@ void
 void
 	ph_drop_forks(t_philo *philo)
 {
-	const int	right_fork_id = philo->id - 1;
-	const int	left_fork_id = philo->id % philo->info->num_of_philo;
-
-	pthread_mutex_unlock(&philo->info->fork_lock[right_fork_id]);
-	pthread_mutex_unlock(&philo->info->fork_lock[left_fork_id]);
+	pthread_mutex_unlock(&philo->info->fork_lock[philo->right_fork_id]);
+	pthread_mutex_unlock(&philo->info->fork_lock[philo->left_fork_id]);
 }
 
 void
@@ -121,13 +118,10 @@ void
 void
 	*philo(void *philo_p)
 {
-	const t_philo	*const_philo = philo_p;
-	const int		right_fork_id = const_philo->id - 1;
-	const int		left_fork_id = const_philo->id % const_philo->info->num_of_philo;
-	t_philo			*philo;
-	pthread_t		monitor;
+	t_philo		*philo;
+	pthread_t	monitor;
 
-	philo = (t_philo *)const_philo;
+	philo = (t_philo *)philo_p;
 	if (pthread_create(&monitor, NULL, ft_monitor, philo_p))
 		return (NULL);
 	if (pthread_detach(monitor))
@@ -137,12 +131,12 @@ void
 	{
 		if (ft_iseven(philo->id))
 			usleep(200);
-		ph_take_fork(philo, right_fork_id);
-		if (left_fork_id == right_fork_id)
+		ph_take_fork(philo, philo->right_fork_id);
+		if (philo->left_fork_id == philo->right_fork_id)
 			ph_died(philo, philo->last_eat);
 		else
 		{
-			ph_take_fork(philo, left_fork_id);
+			ph_take_fork(philo, philo->left_fork_id);
 			ph_eat(philo);
 			ph_drop_forks(philo);
 			ph_sleep(philo);

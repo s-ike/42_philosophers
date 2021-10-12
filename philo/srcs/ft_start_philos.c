@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 12:40:52 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 15:23:42 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,19 @@ void
 			ph_take_fork(philo, left_fork_id);
 		else
 			ph_take_fork(philo, right_fork_id);
-		if (ft_isodd(philo->id))
-			ph_take_fork(philo, right_fork_id);
+		if (left_fork_id == right_fork_id)
+			ph_died(philo, philo->last_eat);
 		else
-			ph_take_fork(philo, left_fork_id);
-		ph_eat(philo);
-		ph_drop_forks(philo);
-		ph_sleep(philo);
-		ph_think(philo);
+		{
+			if (ft_isodd(philo->id))
+				ph_take_fork(philo, right_fork_id);
+			else
+				ph_take_fork(philo, left_fork_id);
+			ph_eat(philo);
+			ph_drop_forks(philo);
+			ph_sleep(philo);
+			ph_think(philo);
+		}
 	}
 	return (NULL);
 }

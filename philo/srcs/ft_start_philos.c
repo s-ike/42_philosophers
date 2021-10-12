@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 15:23:42 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/12 16:49:33 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void
 void
 	ph_drop_forks(t_philo *philo)
 {
-	const int	left_fork_id = philo->id - 1;
-	const int	right_fork_id = philo->id % philo->info->num_of_philo;
+	const int	right_fork_id = philo->id - 1;
+	const int	left_fork_id = philo->id % philo->info->num_of_philo;
 
-	pthread_mutex_unlock(&philo->info->fork_lock[left_fork_id]);
 	pthread_mutex_unlock(&philo->info->fork_lock[right_fork_id]);
+	pthread_mutex_unlock(&philo->info->fork_lock[left_fork_id]);
 }
 
 void
@@ -117,8 +117,8 @@ void
 	*philo(void *philo_p)
 {
 	const t_philo	*const_philo = philo_p;
-	const int		left_fork_id = const_philo->id - 1;
-	const int		right_fork_id = const_philo->id % const_philo->info->num_of_philo;
+	const int		right_fork_id = const_philo->id - 1;
+	const int		left_fork_id = const_philo->id % const_philo->info->num_of_philo;
 	t_philo			*philo;
 	pthread_t		monitor;
 
@@ -130,18 +130,14 @@ void
 	philo->last_eat = ft_get_mstime();
 	while (philo->info->someone_is_dead == false)
 	{
-		if (ft_isodd(philo->id))
-			ph_take_fork(philo, left_fork_id);
-		else
-			ph_take_fork(philo, right_fork_id);
+		if (ft_iseven(philo->id))
+			usleep(200);
+		ph_take_fork(philo, right_fork_id);
 		if (left_fork_id == right_fork_id)
 			ph_died(philo, philo->last_eat);
 		else
 		{
-			if (ft_isodd(philo->id))
-				ph_take_fork(philo, right_fork_id);
-			else
-				ph_take_fork(philo, left_fork_id);
+			ph_take_fork(philo, left_fork_id);
 			ph_eat(philo);
 			ph_drop_forks(philo);
 			ph_sleep(philo);

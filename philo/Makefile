@@ -10,6 +10,7 @@ SRCS		:= main.c \
 				ft_time.c \
 				ft_utils/ft_atoi.c \
 				ft_utils/ft_isdigit.c \
+				ft_utils/ft_iseven.c \
 				ft_utils/ft_isnumeric.c \
 				ft_utils/ft_isodd.c \
 				ft_utils/ft_isover_intrange.c \

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 23:25:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/13 13:04:44 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,20 @@ void
 	t_time	crnt_time;
 
 	philo = (t_philo *)philo_p;
-	// TODO: 検証
 	usleep(500);
 	while (true)
 	{
 		crnt_time = ft_get_mstime();
+		if (philo->info->someone_is_dead)
+			return (NULL);
 		if (check_if_dead(philo, crnt_time))
-			break ;
-		usleep(500);
+		{
+			ph_died(philo, crnt_time);
+			return (NULL);
+		}
+		// TODO: 検証
+		usleep(200);
 	}
-	ph_died(philo, crnt_time);
 	return (NULL);
 }
 
@@ -126,7 +130,8 @@ void
 		return (NULL);
 	if (pthread_detach(monitor))
 		return (NULL);
-	philo->last_eat = ft_get_mstime();
+	// 人数が多い時値が入っていない場合があった
+	// philo->last_eat = ft_get_mstime();
 	while (philo->info->someone_is_dead == false)
 	{
 		if (ft_iseven(philo->id))
@@ -177,6 +182,7 @@ t_status
 	ft_start_philos(t_info *info, t_philo *philos)
 {
 	pthread_t	cnt_monitor_id;
+	t_time		crnt_time;
 	int			i;
 
 	if (info->num_must_eat != NO_OPTION)
@@ -187,8 +193,10 @@ t_status
 			return (FAILURE);
 	}
 	i = -1;
+	crnt_time = ft_get_mstime();
 	while (++i < info->num_of_philo)
 	{
+		philos[i].last_eat = crnt_time;
 		if (pthread_create(&philos[i].thread, NULL, philo, (void *)&philos[i]))
 			return (FAILURE);
 	}

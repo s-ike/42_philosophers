@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 15:58:51 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/13 22:08:48 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void
 
 	if (start == 0)
 		start = ft_get_mstime();
-	printf("%llu %d %s\n", time - start, philo->id, get_msg(status));
+	printf("%lld %d %s\n", time - start, philo->id, get_msg(status));
 }
 
 void

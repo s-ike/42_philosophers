@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/13 14:10:26 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/13 22:34:14 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void
 	pthread_t	monitor;
 
 	philo = (t_philo *)philo_p;
-	if (pthread_create(&monitor, NULL, ft_monitor, philo_p))
+	if (pthread_create(&monitor, NULL, ft_monitor, philo))
 		return (NULL);
 	if (pthread_detach(monitor))
 		return (NULL);

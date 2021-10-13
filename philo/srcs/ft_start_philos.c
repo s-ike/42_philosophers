@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/13 13:04:44 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/13 14:10:26 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool
 	check_if_dead(t_philo *philo, t_time crnt_time)
 {
-	if (philo->info->time_to_die <= crnt_time - philo->last_eat)
+	if (philo->info->time_to_die <= crnt_time - philo->last_ate)
 		return (true);
 	return (false);
 }
@@ -66,8 +66,8 @@ void
 
 	if (philo->info->someone_is_dead)
 		return ;
-	philo->last_eat = crnt_time;
-	ph_do(philo, ST_EAT, philo->last_eat);
+	philo->last_ate = crnt_time;
+	ph_do(philo, ST_EAT, philo->last_ate);
 	philo->eat_cnt++;
 	if (philo->info->num_must_eat != NO_OPTION
 		&& philo->is_complete_eating == false
@@ -131,14 +131,14 @@ void
 	if (pthread_detach(monitor))
 		return (NULL);
 	// 人数が多い時値が入っていない場合があった
-	// philo->last_eat = ft_get_mstime();
+	// philo->last_ate = ft_get_mstime();
 	while (philo->info->someone_is_dead == false)
 	{
 		if (ft_iseven(philo->id))
 			usleep(200);
 		ph_take_fork(philo, philo->right_fork_id);
 		if (philo->left_fork_id == philo->right_fork_id)
-			ph_died(philo, philo->last_eat);
+			ph_died(philo, philo->last_ate);
 		else
 		{
 			ph_take_fork(philo, philo->left_fork_id);
@@ -196,7 +196,7 @@ t_status
 	crnt_time = ft_get_mstime();
 	while (++i < info->num_of_philo)
 	{
-		philos[i].last_eat = crnt_time;
+		philos[i].last_ate = crnt_time;
 		if (pthread_create(&philos[i].thread, NULL, philo, (void *)&philos[i]))
 			return (FAILURE);
 	}

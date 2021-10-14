@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/13 22:34:14 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 17:48:08 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,9 @@ void
 		return (NULL);
 	if (pthread_detach(monitor))
 		return (NULL);
-	// 人数が多い時値が入っていない場合があった
-	// philo->last_ate = ft_get_mstime();
+	philo->last_ate = ft_get_mstime();
+	// if (ft_iseven(philo->id))
+	// 	usleep(200);
 	while (philo->info->someone_is_dead == false)
 	{
 		if (ft_iseven(philo->id))
@@ -182,7 +183,6 @@ t_status
 	ft_start_philos(t_info *info, t_philo *philos)
 {
 	pthread_t	cnt_monitor_id;
-	t_time		crnt_time;
 	int			i;
 
 	if (info->num_must_eat != NO_OPTION)
@@ -193,10 +193,9 @@ t_status
 			return (FAILURE);
 	}
 	i = -1;
-	crnt_time = ft_get_mstime();
+	info->start_time = ft_get_mstime();
 	while (++i < info->num_of_philo)
 	{
-		philos[i].last_ate = crnt_time;
 		if (pthread_create(&philos[i].thread, NULL, philo, (void *)&philos[i]))
 			return (FAILURE);
 	}

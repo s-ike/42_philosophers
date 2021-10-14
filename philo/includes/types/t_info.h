@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:47 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/11 22:23:51 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 17:45:36 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include <pthread.h>
 # include "def_philo.h"
+# include "t_time.h"
 
 typedef struct s_info
 {
@@ -25,6 +26,7 @@ typedef struct s_info
 	int				time_to_sleep;
 	int				num_must_eat;
 	bool			someone_is_dead;
+	t_time			start_time;
 	pthread_mutex_t	*fork_lock;
 	pthread_mutex_t	print_lock;
 }	t_info;

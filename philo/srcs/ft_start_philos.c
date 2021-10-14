@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/13 22:34:14 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 21:49:30 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,16 @@ void
 	philo->last_ate = crnt_time;
 	ph_do(philo, ST_EAT, philo->last_ate);
 	philo->eat_cnt++;
-	if (philo->info->num_must_eat != NO_OPTION
-		&& philo->is_complete_eating == false
-		&& philo->info->num_must_eat <= philo->eat_cnt)
-		philo->is_complete_eating = true;
+	if (philo->eat_cnt < 0)
+		philo->eat_cnt = 0;
+	if (philo->eat_cnt == philo->info->num_must_eat)
+	{
+		pthread_mutex_lock(&philo->info->cnt_lock);
+		philo->info->cnt_finished++;
+		if (philo->info->cnt_finished == philo->info->num_of_philo)
+			philo->info->someone_is_dead = true;
+		pthread_mutex_unlock(&philo->info->cnt_lock);
+	}
 }
 
 void
@@ -151,47 +157,12 @@ void
 	return (NULL);
 }
 
-void
-	*cnt_monitor(void *philos_p)
-{
-	t_philo	*philos;
-	bool	end_flg;
-	int		i;
-
-	philos = philos_p;
-	end_flg = false;
-	usleep(500);
-	while (!end_flg)
-	{
-		end_flg = true;
-		i = -1;
-		while (++i < (*philos).info->num_of_philo)
-		{
-			if (!philos[i].is_complete_eating)
-			{
-				end_flg = false;
-				break ;
-			}
-		}
-	}
-	(*philos).info->someone_is_dead = true;
-	return (NULL);
-}
-
 t_status
 	ft_start_philos(t_info *info, t_philo *philos)
 {
-	pthread_t	cnt_monitor_id;
 	t_time		crnt_time;
 	int			i;
 
-	if (info->num_must_eat != NO_OPTION)
-	{
-		if (pthread_create(&cnt_monitor_id, NULL, cnt_monitor, (void *)philos))
-			return (FAILURE);
-		if (pthread_detach(cnt_monitor_id))
-			return (FAILURE);
-	}
 	i = -1;
 	crnt_time = ft_get_mstime();
 	while (++i < info->num_of_philo)

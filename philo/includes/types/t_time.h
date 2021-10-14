@@ -6,13 +6,13 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:24:28 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 16:24:29 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:14:53 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef T_TIME_H
 # define T_TIME_H
 
-typedef long long t_time;
+typedef long long	t_time;
 
 #endif

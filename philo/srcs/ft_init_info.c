@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/14 21:34:16 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:16:42 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static bool
 	is_succeeded_init_fork_locks(t_info *info)
 {
 	info->fork_lock = (pthread_mutex_t *)malloc(
-		sizeof(pthread_mutex_t) * info->num_of_philo);
+			sizeof(pthread_mutex_t) * info->num_of_philo);
 	if (!info->fork_lock)
 		return (false);
 	return (true);

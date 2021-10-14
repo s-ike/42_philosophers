@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/14 21:49:30 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:14:06 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ bool
 }
 
 static void
-	ph_do(t_philo *philo, t_philo_status status, t_time crnt_time)
+	ph_do(t_philo *philo, t_philo_status status)
 {
+	const t_time	crnt_time = ft_get_mstime();
+
 	if (status != ST_DIE && check_if_dead(philo, crnt_time))
 		return ;
-	// TODO: printを別スレッドで行う実験
-	ft_mutex_print(philo, status, crnt_time);
+	ft_mutex_print(philo, status);
 	if (status == ST_EAT)
 		ft_usleep(philo->info->time_to_eat);
 	else if (status == ST_SLEEP)
@@ -34,22 +35,19 @@ static void
 }
 
 void
-	ph_died(t_philo *philo, t_time crnt_time)
+	ph_died(t_philo *philo)
 {
 	if (philo->info->someone_is_dead == false)
-		ph_do(philo, ST_DIE, crnt_time);
+		ph_do(philo, ST_DIE);
 }
 
 void
 	ph_take_fork(t_philo *philo, int fork_id)
 {
-	t_time	crnt_time;
-
 	if (philo->info->someone_is_dead)
 		return ;
 	pthread_mutex_lock(&philo->info->fork_lock[fork_id]);
-	crnt_time = ft_get_mstime();
-	ph_do(philo, ST_FORK, crnt_time);
+	ph_do(philo, ST_FORK);
 }
 
 void
@@ -62,12 +60,11 @@ void
 void
 	ph_eat(t_philo *philo)
 {
-	const t_time	crnt_time = ft_get_mstime();
-
 	if (philo->info->someone_is_dead)
 		return ;
-	philo->last_ate = crnt_time;
-	ph_do(philo, ST_EAT, philo->last_ate);
+	ph_do(philo, ST_EAT);
+	// TODO: lockの位置
+	philo->last_ate = ft_get_mstime();
 	philo->eat_cnt++;
 	if (philo->eat_cnt < 0)
 		philo->eat_cnt = 0;
@@ -84,21 +81,17 @@ void
 void
 	ph_sleep(t_philo *philo)
 {
-	const t_time	crnt_time = ft_get_mstime();
-
 	if (philo->info->someone_is_dead)
 		return ;
-	ph_do(philo, ST_SLEEP, crnt_time);
+	ph_do(philo, ST_SLEEP);
 }
 
 void
 	ph_think(t_philo *philo)
 {
-	const t_time	crnt_time = ft_get_mstime();
-
 	if (philo->info->someone_is_dead)
 		return ;
-	ph_do(philo, ST_THINK, crnt_time);
+	ph_do(philo, ST_THINK);
 }
 
 void
@@ -116,10 +109,9 @@ void
 			return (NULL);
 		if (check_if_dead(philo, crnt_time))
 		{
-			ph_died(philo, crnt_time);
+			ph_died(philo);
 			return (NULL);
 		}
-		// TODO: 検証
 		usleep(200);
 	}
 	return (NULL);
@@ -136,15 +128,13 @@ void
 		return (NULL);
 	if (pthread_detach(monitor))
 		return (NULL);
-	// 人数が多い時値が入っていない場合があった
-	// philo->last_ate = ft_get_mstime();
 	while (philo->info->someone_is_dead == false)
 	{
 		if (ft_iseven(philo->id))
 			usleep(200);
 		ph_take_fork(philo, philo->right_fork_id);
 		if (philo->left_fork_id == philo->right_fork_id)
-			ph_died(philo, philo->last_ate);
+			ph_died(philo);
 		else
 		{
 			ph_take_fork(philo, philo->left_fork_id);

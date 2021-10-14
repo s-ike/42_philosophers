@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 14:48:24 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 12:41:31 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:02:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 # include "t_philo_status.h"
 # include "t_philo.h"
 
-void	ft_mutex_print(t_philo *philo, t_philo_status status, t_time time);
+void	ft_mutex_print(t_philo *philo, t_philo_status status);
 
 #endif

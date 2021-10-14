@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/13 22:08:48 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:11:54 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,26 @@ static char
 }
 
 static void
-	print(t_philo *philo, t_philo_status status, t_time time)
+	print(t_philo *philo, t_philo_status status)
 {
 	static t_time	start = 0;
+	const t_time	crnt_time = ft_get_mstime();
 
 	if (start == 0)
 		start = ft_get_mstime();
-	printf("%lld %d %s\n", time - start, philo->id, get_msg(status));
+	printf("%lld %d %s\n", crnt_time - start, philo->id, get_msg(status));
 }
 
 void
-	ft_mutex_print(t_philo *philo, t_philo_status status, t_time time)
+	ft_mutex_print(t_philo *philo, t_philo_status status)
 {
 	pthread_mutex_lock(&philo->info->print_lock);
 	if (status == ST_DIE && !philo->info->someone_is_dead)
 	{
 		philo->info->someone_is_dead = true;
-		print(philo, status, time);
+		print(philo, ST_DIE);
 	}
 	else if (!philo->info->someone_is_dead)
-		print(philo, status, time);
+		print(philo, status);
 	pthread_mutex_unlock(&philo->info->print_lock);
 }

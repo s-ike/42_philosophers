@@ -24,10 +24,10 @@ CC			:= gcc
 CFLAGS		:= -Wall -Wextra -Werror -pthread
 
 DEBUG		:= -g
-ifdef LEAKS
-DEBUG2		:=
-else
+ifdef MEM
 DEBUG2		:= -fsanitize=address
+else
+DEBUG2		:=
 endif
 
 RM			:= rm -f
@@ -58,5 +58,8 @@ re:			fclean $(NAME)
 leaks:
 			$(MAKE) CFLAGS="$(CFLAGS) -D LEAKS=1" LEAKS=TRUE
 
+mem:
+			$(MAKE) MEM=TRUE
+
 .PHONY:		all clean fclean re bonus
-.PHONY:		leaks
+.PHONY:		leaks mem

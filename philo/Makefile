@@ -5,6 +5,8 @@ SRCS		:= main.c \
 				ft_init_info.c \
 				ft_init_philos.c \
 				ft_mutex_print.c \
+				ft_philo_routine.c \
+				ft_philo_routine2.c \
 				ft_start_philos.c \
 				ft_terminate.c \
 				ft_time.c \

@@ -6,27 +6,11 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/14 22:16:42 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/15 22:41:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_init_info.h"
-
-static bool
-	is_valid_arg_nums(int argc, const char **argv)
-{
-	int	i;
-
-	i = 1;
-	while (i < argc)
-	{
-		if (!ft_isnumeric(argv[i])
-			|| ft_isover_intrange(argv[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 static void
 	set_args_to_info(t_info *info, int argc, const char **argv)
@@ -95,7 +79,7 @@ static bool
 t_info
 	*ft_init_info(int argc, const char **argv)
 {
-	const bool	valid_args = is_valid_arg_nums(argc, argv);
+	const bool	valid_args = ft_is_valid_arg_nums(argc, argv);
 	t_info		*info;
 
 	if (!valid_args)
@@ -105,11 +89,13 @@ t_info
 		return (NULL);
 	memset(info, 0, sizeof(t_info));
 	info->someone_is_dead = false;
+	info->fork_lock = NULL;
 	set_args_to_info(info, argc, argv);
 	if (is_positive_nums(info, argc)
 		&& is_succeeded_init_fork_locks(info)
 		&& is_succeeded_init_mutex(info))
 		return (info);
+	free(info->fork_lock);
 	free(info);
 	return (NULL);
 }

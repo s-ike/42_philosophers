@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_info.h                                     :+:      :+:    :+:   */
+/*   ft_is_valid_arg_nums.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/15 22:44:40 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/15 22:42:50 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/15 22:42:51 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INIT_INFO_H
-# define FT_INIT_INFO_H
+#include "ft_is_valid_arg_nums.h"
 
-# include <stdlib.h>
-# include <string.h>
-# include "ft_is_valid_arg_nums.h"
-# include "ft_utils.h"
-# include "t_info.h"
+bool
+	ft_is_valid_arg_nums(int argc, const char **argv)
+{
+	int	i;
 
-t_info	*ft_init_info(int argc, const char **argv);
-
-#endif
+	i = 1;
+	while (i < argc)
+	{
+		if (!ft_isnumeric(argv[i])
+			|| ft_isover_intrange(argv[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}

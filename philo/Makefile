@@ -1,6 +1,10 @@
 NAME		:= philo
 
 SRCDIR		:= ./srcs/
+OBJDIR		:= ./objs/
+UTILDIR		:= ft_utils/
+VPATH		:= $(SRCDIR):$(SRCDIR)$(UTILDIR)
+
 SRCS		:= main.c \
 				ft_init_info.c \
 				ft_init_philos.c \
@@ -10,20 +14,21 @@ SRCS		:= main.c \
 				ft_start_philos.c \
 				ft_terminate.c \
 				ft_time.c \
-				ft_utils/ft_atoi.c \
-				ft_utils/ft_isdigit.c \
-				ft_utils/ft_iseven.c \
-				ft_utils/ft_isnumeric.c \
-				ft_utils/ft_isover_intrange.c \
-				ft_utils/ft_ispositive.c \
-				ft_utils/ft_isspace.c
+				$(UTILDIR)ft_atoi.c \
+				$(UTILDIR)ft_isdigit.c \
+				$(UTILDIR)ft_iseven.c \
+				$(UTILDIR)ft_isnumeric.c \
+				$(UTILDIR)ft_isover_intrange.c \
+				$(UTILDIR)ft_ispositive.c \
+				$(UTILDIR)ft_isspace.c
 SRCS		:= $(addprefix $(SRCDIR), $(SRCS))
-OBJS		:= $(SRCS:.c=.o)
+OBJS		:= $(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.o)))
+DEPENDS		:= $(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.d)))
 
 INCLUDE 	:= -I./includes/ -I./includes/defs/ -I./includes/types/
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -pthread
+CFLAGS		:= -Wall -Wextra -Werror -pthread -MMD -MP
 
 DEBUG		:= -g
 ifdef MEM
@@ -38,7 +43,10 @@ C_DEFAULT	:= "\x1b[39m"
 C_RESET		:= "\x1b[0m"
 
 
-.c.o:
+$(OBJDIR)%.o:	%.c
+			@if [ ! -d $(OBJDIR) ]; then \
+				echo ";; mkdir $(OBJDIR)"; mkdir $(OBJDIR); \
+			fi
 			$(CC) $(CFLAGS) $(DEBUG) $(DEBUG2) $(INCLUDE) -c $< -o $@
 
 all:		$(NAME)
@@ -51,6 +59,7 @@ bonus:		$(NAME)
 
 clean:
 			$(RM) $(OBJS)
+			$(RM) $(DEPENDS)
 
 fclean:		clean
 			$(RM) $(NAME)
@@ -62,6 +71,8 @@ leaks:
 
 mem:
 			$(MAKE) MEM=TRUE
+
+-include	$(DEPENDS)
 
 .PHONY:		all clean fclean re bonus
 .PHONY:		leaks mem

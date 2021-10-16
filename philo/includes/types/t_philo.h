@@ -6,13 +6,14 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 09:26:27 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/14 21:37:18 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/16 09:52:11 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef T_PHILO_H
 # define T_PHILO_H
 
+# include <stdint.h>
 # include "t_info.h"
 # include "t_time.h"
 

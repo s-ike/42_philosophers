@@ -39,9 +39,9 @@ DEBUG2		:=
 endif
 
 RM			:= rm -f
-C_GREEN		:= "\x1b[32m"
-C_DEFAULT	:= "\x1b[39m"
-C_RESET		:= "\x1b[0m"
+C_GREEN		:= "\033[32m"
+C_DEFAULT	:= "\033[39m"
+C_RESET		:= "\033[m"
 
 
 $(OBJDIR)%.o:	%.c

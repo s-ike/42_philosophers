@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:55:22 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/15 13:04:12 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/16 10:09:00 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include "ft_mutex_print.h"
 # include "ft_time.h"
 # include "ft_utils.h"
+
+# define RIGHT 0
+# define LEFT 1
 
 bool	ft_check_if_dead(t_philo *philo);
 void	ft_philo_do(t_philo *philo, t_philo_status status);

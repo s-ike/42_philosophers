@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/15 22:41:39 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/16 14:08:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,13 @@ static bool
 	return (true);
 }
 
-t_info
-	*ft_init_info(int argc, const char **argv)
+t_status
+	ft_init_info(t_info *info, int argc, const char **argv)
 {
 	const bool	valid_args = ft_is_valid_arg_nums(argc, argv);
-	t_info		*info;
 
 	if (!valid_args)
-		return (NULL);
-	info = (t_info *)malloc(sizeof(t_info));
-	if (!info)
-		return (NULL);
+		return (FAILURE);
 	memset(info, 0, sizeof(t_info));
 	info->someone_is_dead = false;
 	info->fork_lock = NULL;
@@ -94,8 +90,7 @@ t_info
 	if (is_positive_nums(info, argc)
 		&& is_succeeded_init_fork_locks(info)
 		&& is_succeeded_init_mutex(info))
-		return (info);
+		return (SUCCESS);
 	free(info->fork_lock);
-	free(info);
-	return (NULL);
+	return (FAILURE);
 }

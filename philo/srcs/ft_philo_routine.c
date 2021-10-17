@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 09:18:29 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 15:13:56 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/17 17:17:42 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ static void
 	philo->has_left_fork = false;
 }
 
-static void
+static t_status
 	philo_action(t_philo *philo, t_philo_status status)
 {
 	if (status == ST_FORK)
 		philo_take_fork(philo, LEFT);
 	else if (status == ST_EAT)
 	{
-		ft_philo_eat(philo);
+		if (ft_philo_eat(philo) == FAILURE)
+			return (FAILURE);
 		philo_drop_forks(philo);
 	}
 	else if (status == ST_SLEEP)
@@ -66,6 +67,7 @@ static void
 	}
 	else
 		ft_philo_do(philo, status);
+	return (SUCCESS);
 }
 
 void
@@ -88,7 +90,8 @@ void
 		status = ST_FORK;
 		while (!philo->info->someone_is_dead && status <= ST_THINK)
 		{
-			philo_action(philo, status);
+			if (philo_action(philo, status) == FAILURE)
+				return ;
 			status++;
 		}
 		philo_drop_forks(philo);

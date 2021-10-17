@@ -31,7 +31,11 @@ INCLUDE 	:= -I./includes/ -I./includes/defs/ -I./includes/types/
 CC			:= gcc
 CFLAGS		:= -Wall -Wextra -Werror -pthread -MMD -MP
 
+ifdef TH
+DEBUG		:= -g -fsanitize=thread
+else
 DEBUG		:= -g
+endif
 ifdef MEM
 DEBUG2		:= -fsanitize=address
 else
@@ -73,7 +77,10 @@ leaks:
 mem:
 			$(MAKE) MEM=TRUE
 
+th:
+			$(MAKE) TH=TRUE
+
 -include	$(DEPENDS)
 
 .PHONY:		all clean fclean re bonus
-.PHONY:		leaks mem
+.PHONY:		leaks mem th

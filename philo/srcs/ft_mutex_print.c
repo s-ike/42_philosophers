@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/14 22:11:54 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/17 17:23:13 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static char
 		return (COLOR_BLUE"is sleeping"COLOR_RESET);
 	else if (status == ST_THINK)
 		return (COLOR_YELLOW"is thinking"COLOR_RESET);
+	else if (status == ST_END)
+		return ("Error");
 	return (NULL);
 }
 
@@ -48,7 +50,7 @@ void
 		philo->info->someone_is_dead = true;
 		print(philo, ST_DIE);
 	}
-	else if (!philo->info->someone_is_dead)
+	else if (status == ST_END || !philo->info->someone_is_dead)
 		print(philo, status);
 	pthread_mutex_unlock(&philo->info->print_lock);
 }

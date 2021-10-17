@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 13:03:21 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 21:56:11 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/17 23:14:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void
 static void
 	*increment_cnt(void *philo_p)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)philo_p;
 	pthread_mutex_lock(&philo->info->cnt_lock);

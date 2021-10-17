@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 13:03:21 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/15 13:03:21 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/17 15:12:51 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,23 @@ void
 	if (status != ST_DIE && ft_check_if_dead(philo))
 		return ;
 	ft_mutex_print(philo, status);
-	if (status == ST_EAT)
-		ft_usleep(philo->info->time_to_eat);
-	else if (status == ST_SLEEP)
-		ft_usleep(philo->info->time_to_sleep);
+}
+
+void
+	ft_philo_eat(t_philo *philo)
+{
+	ft_philo_do(philo, ST_EAT);
+	philo->last_ate = ft_get_mstime();
+	philo->eat_cnt++;
+	if (philo->eat_cnt < 0)
+		philo->eat_cnt = 0;
+	if (philo->eat_cnt == philo->info->num_must_eat)
+	{
+		pthread_mutex_lock(&philo->info->cnt_lock);
+		philo->info->cnt_finished++;
+		if (philo->info->cnt_finished == philo->info->num_of_philo)
+			philo->info->someone_is_dead = true;
+		pthread_mutex_unlock(&philo->info->cnt_lock);
+	}
+	ft_usleep(philo->info->time_to_eat);
 }

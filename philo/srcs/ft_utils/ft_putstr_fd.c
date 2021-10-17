@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mutex_print.h                                   :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 14:48:24 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 15:59:35 by sikeda           ###   ########.fr       */
+/*   Created: 2021/08/14 03:12:27 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/17 15:58:40 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MUTEX_PRINT_H
-# define FT_MUTEX_PRINT_H
+#include "ft_utils.h"
 
-// # include <stdio.h>
-# include "ft_time.h"
-# include "def_color.h"
-# include "t_philo_status.h"
-# include "t_philo.h"
-# include "ft_utils.h"
-
-void	ft_mutex_print(t_philo *philo, t_philo_status status);
-
-#endif
+void	ft_putstr_fd(char *str, int fd)
+{
+	if (str)
+		write(fd, str, ft_strlen(str));
+}

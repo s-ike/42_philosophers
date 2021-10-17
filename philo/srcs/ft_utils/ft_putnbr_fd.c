@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mutex_print.h                                   :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 14:48:24 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 15:59:35 by sikeda           ###   ########.fr       */
+/*   Created: 2021/08/14 03:12:32 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/17 15:58:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MUTEX_PRINT_H
-# define FT_MUTEX_PRINT_H
+#include "ft_utils.h"
 
-// # include <stdio.h>
-# include "ft_time.h"
-# include "def_color.h"
-# include "t_philo_status.h"
-# include "t_philo.h"
-# include "ft_utils.h"
+static void	recursive_putnbr(unsigned int n, int fd)
+{
+	if (n / 10 == 0)
+	{
+		ft_putchar_fd(n + '0', fd);
+		return ;
+	}
+	recursive_putnbr(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
+}
 
-void	ft_mutex_print(t_philo *philo, t_philo_status status);
+void	ft_putnbr_fd(int num, int fd)
+{
+	unsigned int	un;
 
-#endif
+	if (num < 0)
+	{
+		ft_putchar_fd('-', fd);
+		un = -num;
+	}
+	else
+		un = num;
+	recursive_putnbr(un, fd);
+}

@@ -21,7 +21,12 @@ SRCS		:= main.c \
 				$(UTILDIR)ft_isnumeric.c \
 				$(UTILDIR)ft_isover_intrange.c \
 				$(UTILDIR)ft_ispositive.c \
-				$(UTILDIR)ft_isspace.c
+				$(UTILDIR)ft_isspace.c \
+				$(UTILDIR)ft_putchar_fd.c \
+				$(UTILDIR)ft_putendl_fd.c \
+				$(UTILDIR)ft_putnbr_fd.c \
+				$(UTILDIR)ft_putstr_fd.c \
+				$(UTILDIR)ft_strlen.c
 SRCS		:= $(addprefix $(SRCDIR), $(SRCS))
 OBJS		:= $(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.o)))
 DEPENDS		:= $(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.d)))

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:02:01 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/10 16:24:49 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/17 23:02:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include <stdbool.h>
 # include "t_time.h"
 
+# define FT_TIME_ERROR -1
+
 t_time	ft_get_mstime(void);
-t_time	ft_get_microtime(void);
 bool	ft_usleep(int usleep_time);
 
 #endif

@@ -5,6 +5,7 @@ t_status
 	ft_start_philos(t_info *info, t_philo *philos)
 {
 	static t_time	start = 0;
+	pid_t			pid;
 	int				i;
 
 	i = -1;
@@ -12,9 +13,6 @@ t_status
 		start = ft_get_mstime();
 	while (++i < info->num_of_philo)
 	{
-		pid_t	pid;
-		int		wait_status;
-
 		pid = fork();
 		if (pid < 0)
 		{
@@ -23,6 +21,7 @@ t_status
 		}
 		else if (pid == 0)
 		{
+
 			// child
 			printf("start: %lld\n", start);
 			printf("%lld %d has taken a fork\n", ft_get_mstime() - start, philos[i].id);
@@ -35,7 +34,13 @@ t_status
 			exit(EXIT_SUCCESS);
 		}
 		// parent
-		if (waitpid(pid, &wait_status, WUNTRACED | WCONTINUED) < 0) {
+		info->philo_pid[i] = pid;
+	}
+	int	wait_status;
+	i = -1;
+	while (++i < info->num_of_philo)
+	{
+		if (waitpid(-1, &wait_status, WUNTRACED | WCONTINUED) < 0) {
 			return (FAILURE);
 		}
 	}

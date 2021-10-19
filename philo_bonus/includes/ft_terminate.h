@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 09:26:30 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 23:50:03 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/19 09:57:56 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "t_info.h"
 # include "t_philo.h"
 
+void	ft_terminate_info(t_info *info);
 void	ft_terminate_philos(t_philo *philos);
 
 #endif

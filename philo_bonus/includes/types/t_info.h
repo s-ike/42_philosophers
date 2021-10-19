@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:47 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 23:46:39 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/19 09:51:31 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_info
 	int		num_must_eat;
 	int		cnt_finished;
 	bool	someone_is_dead;
+	pid_t	*philo_pid;
 }	t_info;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 00:17:56 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/18 00:21:10 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/19 09:57:31 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,13 @@ int
 		return (EXIT_FAILURE);
 	philos = ft_init_philos(&info);
 	if (!philos)
+	{
+		ft_terminate_info(&info);
 		return (EXIT_FAILURE);
+	}
 	successed = SUCCESS;
 	successed = ft_start_philos(&info, philos);
+	ft_terminate_info(&info);
 	ft_terminate_philos(philos);
 	if (successed == SUCCESS)
 		return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 23:49:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/19 09:55:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ static bool
 	return (true);
 }
 
+static bool
+	is_succeeded_alloc_philo_pid(t_info *info)
+{
+	info->philo_pid = (pid_t *)malloc(sizeof(pid_t) * info->num_of_philo);
+	if (!info->philo_pid)
+		return (false);
+	return (true);
+}
+
 t_status
 	ft_init_info(t_info *info, int argc, const char **argv)
 {
@@ -49,7 +58,9 @@ t_status
 	memset(info, 0, sizeof(t_info));
 	info->someone_is_dead = false;
 	set_args_to_info(info, argc, argv);
-	if (is_positive_nums(info, argc))
+	if (is_positive_nums(info, argc)
+		&& is_succeeded_alloc_philo_pid(info))
 		return (SUCCESS);
+	free(info->philo_pid);
 	return (FAILURE);
 }

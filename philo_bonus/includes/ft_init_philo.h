@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_terminate.h                                     :+:      :+:    :+:   */
+/*   ft_init_philo.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 09:26:30 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/21 18:58:12 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/21 18:54:32 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_TERMINATE_H
-# define FT_TERMINATE_H
+#ifndef FT_INIT_PHILO_H
+# define FT_INIT_PHILO_H
 
-# ifdef LEAKS
-#  include <unistd.h>
-#  include <stdio.h>
-# endif
 # include <stdlib.h>
+# include <string.h>
 # include "t_info.h"
+# include "t_philo.h"
+# include "t_status.h"
 
-void	ft_terminate_info(t_info *info);
+t_status	ft_init_philo(t_info *info, t_philo *philo);
 
 #endif

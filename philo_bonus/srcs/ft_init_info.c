@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/19 09:55:24 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/21 17:59:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,21 @@ static bool
 	return (true);
 }
 
+static bool
+	is_succeeded_init_semaphore(t_info *info)
+{
+	info->forks_lock = sem_open(SEM_FORKS, O_CREAT, S_IRWXU, info->num_of_philo);
+	if (info->print_lock == SEM_FAILED)
+		return (false);
+	info->print_lock = sem_open(SEM_PRINT, O_CREAT, S_IRWXU, 1);
+	if (info->print_lock == SEM_FAILED)
+	{
+		sem_close(info->forks_lock);
+		return (false);
+	}
+	return (true);
+}
+
 t_status
 	ft_init_info(t_info *info, int argc, const char **argv)
 {
@@ -57,9 +72,12 @@ t_status
 		return (FAILURE);
 	memset(info, 0, sizeof(t_info));
 	info->someone_is_dead = false;
+	sem_unlink(SEM_FORKS);
+	sem_unlink(SEM_PRINT);
 	set_args_to_info(info, argc, argv);
 	if (is_positive_nums(info, argc)
-		&& is_succeeded_alloc_philo_pid(info))
+		&& is_succeeded_alloc_philo_pid(info)
+		&& is_succeeded_init_semaphore(info))
 		return (SUCCESS);
 	free(info->philo_pid);
 	return (FAILURE);

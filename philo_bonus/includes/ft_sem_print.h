@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_philos.h                                   :+:      :+:    :+:   */
+/*   ft_sem_print.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 12:42:38 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/21 16:57:28 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/21 18:04:53 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INIT_PHILOS_H
-# define FT_INIT_PHILOS_H
+#ifndef FT_SEM_PRINT_H
+# define FT_SEM_PRINT_H
 
-# include <stdlib.h>
-# include "t_info.h"
+# include <stdio.h>
+# include <semaphore.h>
+# include "def_color.h"
+# include "t_philo_status.h"
 # include "t_philo.h"
+# include "ft_time.h"
 
-t_philo	*ft_init_philos(t_info *info);
+void	ft_sem_print(t_philo *philo, t_philo_status status);
 
 #endif

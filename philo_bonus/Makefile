@@ -7,8 +7,9 @@ VPATH		:= $(SRCDIR):$(SRCDIR)$(UTILDIR)
 
 SRCS		:= main.c \
 				ft_init_info.c \
-				ft_init_philos.c \
+				ft_init_philo.c \
 				ft_is_valid_arg_nums.c \
+				ft_sem_print.c \
 				ft_start_philos.c \
 				ft_terminate.c \
 				ft_time.c \

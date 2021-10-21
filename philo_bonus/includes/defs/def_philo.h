@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:40 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/12 17:14:04 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/21 17:38:46 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,8 @@
 # define REQUIRED_ARGC 5
 # define OPTIONAL_ARGC 6
 # define NO_OPTION -1
+
+# define SEM_FORKS "/sem_forks"
+# define SEM_PRINT "/sem_print"
 
 #endif

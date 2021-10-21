@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 00:02:14 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/18 23:00:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/21 16:42:17 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <stdlib.h>
+# include <semaphore.h>
+# include <stdio.h>
+# include "def_color.h"
 # include "t_info.h"
 # include "t_philo.h"
 # include "t_status.h"

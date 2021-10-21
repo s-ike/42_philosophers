@@ -1,9 +1,51 @@
 #include "ft_start_philos.h"
 
+bool
+	ft_check_if_dead(t_philo *philo)
+{
+	const t_time	crnt_time = ft_get_mstime();
+
+	if (philo->info->time_to_die <= crnt_time - philo->last_ate)
+		return (true);
+	return (false);
+}
+
+void
+	philo_do(t_philo *philo, t_philo_status status)
+{
+	if (status != ST_DIE && ft_check_if_dead(philo))
+		return ;
+	ft_sem_print(philo, status);
+}
+
+static void
+	philo_routine(t_info *info, t_philo *philo)
+{
+	philo->last_ate = ft_get_mstime();
+	sem_wait(info->forks_lock);
+	philo_do(philo, ST_FORK);
+	sem_wait(info->forks_lock);
+	philo_do(philo, ST_FORK);
+	philo_do(philo, ST_EAT);
+	philo->last_ate = ft_get_mstime();
+	philo->eat_cnt++;
+	if (philo->eat_cnt < 0)
+		philo->eat_cnt = 0;
+	// TODO:
+	ft_usleep(info->time_to_eat);
+	sem_post(info->forks_lock);
+	sem_post(info->forks_lock);
+	philo_do(philo, ST_SLEEP);
+	ft_usleep(info->time_to_sleep);
+	philo_do(philo, ST_THINK);
+	exit(EXIT_SUCCESS);
+}
+
 t_status
 	ft_start_philos(t_info *info, t_philo *philo)
 {
 	pid_t	pid;
+	int		wait_status;
 	int		i;
 
 	i = -1;
@@ -16,23 +58,10 @@ t_status
 		else if (pid == 0)
 		{
 			philo->id = i + 1;
-			printf("start: %lld\n", ft_get_mstime());
-			sem_wait(info->forks_lock);
-			ft_sem_print(philo, ST_FORK);
-			sem_wait(info->forks_lock);
-			ft_sem_print(philo, ST_FORK);
-			ft_sem_print(philo, ST_EAT);
-			ft_usleep(info->time_to_eat);
-			sem_post(info->forks_lock);
-			sem_post(info->forks_lock);
-			ft_sem_print(philo, ST_SLEEP);
-			ft_usleep(info->time_to_sleep);
-			ft_sem_print(philo, ST_THINK);
-			exit(EXIT_SUCCESS);
+			philo_routine(info, philo);
 		}
 		info->philo_pid[i] = pid;
 	}
-	int	wait_status;
 	i = -1;
 	while (++i < info->num_of_philo)
 	{

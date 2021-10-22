@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 16:57:25 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/21 18:49:33 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/22 08:44:48 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void
 	{
 		philo->info->someone_is_dead = true;
 		print(philo, ST_DIE);
+
+		exit(EXIT_SUCCESS);
 	}
 	else if (status == ST_END || !philo->info->someone_is_dead)
 		print(philo, status);

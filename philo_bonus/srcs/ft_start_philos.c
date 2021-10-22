@@ -18,29 +18,66 @@ void
 	ft_sem_print(philo, status);
 }
 
+void
+	ft_philo_die(t_philo *philo)
+{
+	if (philo->info->someone_is_dead == false)
+		philo_do(philo, ST_DIE);
+}
+
+void
+	*monitor(void *philo_p)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philo_p;
+	usleep(500);
+	while (true)
+	{
+		if (philo->info->someone_is_dead)
+			return (NULL);
+		if (ft_check_if_dead(philo))
+		{
+			ft_philo_die(philo);
+			return (NULL);
+		}
+		usleep(200);
+	}
+	return (NULL);
+}
+
 static void
 	philo_routine(t_info *info, t_philo *philo)
 {
+	pthread_t	monitor_tid;
+
+	if (pthread_create(&monitor_tid, NULL, monitor, philo))
+		exit(EXIT_FAILURE);
+	if (pthread_detach(monitor_tid))
+		exit(EXIT_FAILURE);
 	philo->last_ate = ft_get_mstime();
-	sem_wait(info->forks_lock);
-	philo_do(philo, ST_FORK);
-	sem_wait(info->forks_lock);
-	philo_do(philo, ST_FORK);
-	philo_do(philo, ST_EAT);
-	philo->last_ate = ft_get_mstime();
-	philo->eat_cnt++;
-	if (philo->eat_cnt < 0)
-		philo->eat_cnt = 0;
-	// TODO:
-	ft_usleep(info->time_to_eat);
-	sem_post(info->forks_lock);
-	sem_post(info->forks_lock);
-	philo_do(philo, ST_SLEEP);
-	ft_usleep(info->time_to_sleep);
-	philo_do(philo, ST_THINK);
+	while (philo->info->someone_is_dead == false)
+	{
+		sem_wait(info->forks_lock);
+		philo_do(philo, ST_FORK);
+		sem_wait(info->forks_lock);
+		philo_do(philo, ST_FORK);
+		philo_do(philo, ST_EAT);
+		philo->last_ate = ft_get_mstime();
+		philo->eat_cnt++;
+		if (philo->eat_cnt < 0)
+			philo->eat_cnt = 0;
+		// TODO:
+		ft_usleep(info->time_to_eat);
+		sem_post(info->forks_lock);
+		sem_post(info->forks_lock);
+		philo_do(philo, ST_SLEEP);
+		ft_usleep(info->time_to_sleep);
+		philo_do(philo, ST_THINK);
+	}
 	exit(EXIT_SUCCESS);
 }
-
+#include <signal.h>
 t_status
 	ft_start_philos(t_info *info, t_philo *philo)
 {
@@ -62,12 +99,9 @@ t_status
 		}
 		info->philo_pid[i] = pid;
 	}
+	waitpid(-1, &wait_status, 0);
 	i = -1;
 	while (++i < info->num_of_philo)
-	{
-		if (waitpid(-1, &wait_status, WUNTRACED | WCONTINUED) < 0) {
-			return (FAILURE);
-		}
-	}
+		kill(info->philo_pid[i], SIGTERM);
 	return (SUCCESS);
 }

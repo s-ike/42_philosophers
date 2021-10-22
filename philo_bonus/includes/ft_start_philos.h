@@ -6,12 +6,12 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 00:02:14 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/22 09:04:23 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/22 11:40:09 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_START_PHILOS
-# define FT_START_PHILOS
+#ifndef FT_START_PHILOS_H
+# define FT_START_PHILOS_H
 
 # include <unistd.h>
 # include <stdlib.h>

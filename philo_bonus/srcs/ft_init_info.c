@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/21 17:59:16 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/22 11:53:23 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static bool
 static bool
 	is_succeeded_init_semaphore(t_info *info)
 {
-	info->forks_lock = sem_open(SEM_FORKS, O_CREAT, S_IRWXU, info->num_of_philo);
+	info->forks_lock = sem_open(
+			SEM_FORKS, O_CREAT, S_IRWXU, info->num_of_philo);
 	if (info->print_lock == SEM_FAILED)
 		return (false);
 	info->print_lock = sem_open(SEM_PRINT, O_CREAT, S_IRWXU, 1);

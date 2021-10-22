@@ -60,6 +60,8 @@ static void
 	{
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
+		if (info->num_of_philo == 1)
+			exit(EXIT_SUCCESS);
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
 		philo_do(philo, ST_EAT);
@@ -77,7 +79,7 @@ static void
 	}
 	exit(EXIT_SUCCESS);
 }
-#include <signal.h>
+
 t_status
 	ft_start_philos(t_info *info, t_philo *philo)
 {

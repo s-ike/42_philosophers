@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 09:26:30 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/21 18:58:12 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 21:39:04 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #  include <stdio.h>
 # endif
 # include <stdlib.h>
+# include "def_philo.h"
 # include "t_info.h"
 
 void	ft_terminate_info(t_info *info);

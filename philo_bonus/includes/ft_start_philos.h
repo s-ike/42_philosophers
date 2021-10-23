@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 00:02:14 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 11:05:46 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 13:52:57 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 # include <semaphore.h>
 # include <pthread.h>
 # include <sys/wait.h>
+# include "def_error.h"
 # include "def_philo.h"
 # include "t_info.h"
 # include "t_philo.h"
 # include "t_status.h"
+# include "ft_puterror.h"
 # include "ft_sem_print.h"
 # include "ft_time.h"
 

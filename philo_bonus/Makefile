@@ -9,6 +9,7 @@ SRCS		:= main.c \
 				ft_init_info.c \
 				ft_init_philo.c \
 				ft_is_valid_arg_nums.c \
+				ft_puterror.c \
 				ft_sem_print.c \
 				ft_start_philos.c \
 				ft_terminate.c \

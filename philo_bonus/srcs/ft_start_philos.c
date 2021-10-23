@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:40:50 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 10:42:33 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 13:53:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ static void
 	pthread_t	monitor_tid;
 
 	if (pthread_create(&monitor_tid, NULL, monitor, philo))
-		exit(EXIT_FAILURE);	// TODO:
+		exit(ft_puterror_and_return(ERR_THREAD, EXIT_FAILURE));
 	if (pthread_detach(monitor_tid))
-		exit(EXIT_FAILURE);	// TODO:
+		exit(ft_puterror_and_return(ERR_THREAD, EXIT_FAILURE));
 	philo->last_ate = ft_get_mstime();
 	while (philo->finished == false)
 	{

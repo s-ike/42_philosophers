@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 11:44:17 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 13:45:23 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,20 @@ t_status
 	const bool	valid_args = ft_is_valid_arg_nums(argc, argv);
 
 	if (!valid_args)
-		return (FAILURE);
+		return (ft_puterror_and_return(ERR_INVAL, FAILURE));
 	memset(info, 0, sizeof(t_info));
 	sem_unlink(SEM_FORKS);
 	sem_unlink(SEM_PRINT);
 	set_args_to_info(info, argc, argv);
-	info->philo_pid = NULL;
-	if (is_positive_nums(info, argc)
-		&& is_succeeded_alloc_philo_pid(info)
-		&& is_succeeded_init_semaphore(info))
-		return (SUCCESS);
-	free(info->philo_pid);
-	return (FAILURE);
+	if (!is_positive_nums(info, argc))
+		return (ft_puterror_and_return(ERR_INVAL, FAILURE));
+	else if (!is_succeeded_alloc_philo_pid(info))
+		return (ft_puterror_and_return(ERR_MALLOC, FAILURE));
+	else if (!is_succeeded_init_semaphore(info))
+	{
+		ft_puterror(ERR_SEMAPHORE);
+		free(info->philo_pid);
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }

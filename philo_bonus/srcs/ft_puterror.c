@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_philo.h                                    :+:      :+:    :+:   */
+/*   ft_puterror.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 15:59:36 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 13:52:23 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/23 12:08:09 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/23 13:43:18 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INIT_PHILO_H
-# define FT_INIT_PHILO_H
+#include "ft_puterror.h"
 
-# include <stdlib.h>
-# include <string.h>
-# include "def_error.h"
-# include "t_info.h"
-# include "t_philo.h"
-# include "t_status.h"
-# include "ft_puterror.h"
+int
+	ft_puterror(const char *str)
+{
+	return (printf("%s%s%s\n", COLOR_BG_RED, str, COLOR_RESET));
+}
 
-t_status	ft_init_philo(t_info *info, t_philo *philo);
-
-#endif
+int
+	ft_puterror_and_return(const char *str, int return_status)
+{
+	ft_puterror(str);
+	return (return_status);
+}

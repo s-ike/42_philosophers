@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 10:52:58 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 11:44:17 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static bool
 {
 	info->forks_lock = sem_open(
 			SEM_FORKS, O_CREAT, S_IRWXU, info->num_of_philo);
-	if (info->print_lock == SEM_FAILED)
+	if (info->forks_lock == SEM_FAILED)
 		return (false);
 	info->print_lock = sem_open(SEM_PRINT, O_CREAT, S_IRWXU, 1);
 	if (info->print_lock == SEM_FAILED)
@@ -75,6 +75,7 @@ t_status
 	sem_unlink(SEM_FORKS);
 	sem_unlink(SEM_PRINT);
 	set_args_to_info(info, argc, argv);
+	info->philo_pid = NULL;
 	if (is_positive_nums(info, argc)
 		&& is_succeeded_alloc_philo_pid(info)
 		&& is_succeeded_init_semaphore(info))

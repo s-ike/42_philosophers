@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 00:02:14 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/22 21:58:44 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 11:05:46 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <signal.h>
 # include <semaphore.h>
 # include <pthread.h>
-# include <stdio.h>
+# include <sys/wait.h>
 # include "def_philo.h"
 # include "t_info.h"
 # include "t_philo.h"

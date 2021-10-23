@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 16:57:25 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/22 11:44:26 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/22 23:09:28 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ void
 	ft_sem_print(t_philo *philo, t_philo_status status)
 {
 	sem_wait(philo->info->print_lock);
-	if (status == ST_DIE && !philo->info->someone_is_dead)
+	if (status == ST_DIE && !philo->finished)
 	{
-		philo->info->someone_is_dead = true;
+		philo->finished = true;
 		print(philo, ST_DIE);
-
-		exit(EXIT_SUCCESS);
+		exit(EXIT_SOMEONE_IS_DEAD);
 	}
-	else if (status == ST_END || !philo->info->someone_is_dead)
+	else if (!philo->finished)
 		print(philo, status);
 	sem_post(philo->info->print_lock);
 }

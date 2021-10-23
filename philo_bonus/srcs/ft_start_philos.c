@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:40:50 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/22 11:40:51 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 10:42:33 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,27 @@ bool
 void
 	philo_do(t_philo *philo, t_philo_status status)
 {
+	if (philo->finished)
+		return ;
 	if (status != ST_DIE && ft_check_if_dead(philo))
 		return ;
 	ft_sem_print(philo, status);
 }
 
 void
-	ft_philo_die(t_philo *philo)
+	ft_philo_eat(t_philo *philo)
 {
-	if (philo->info->someone_is_dead == false)
-		philo_do(philo, ST_DIE);
+	philo_do(philo, ST_EAT);
+	philo->last_ate = ft_get_mstime();
+	philo->eat_cnt++;
+	if (philo->eat_cnt < 0)
+		philo->eat_cnt = 0;
+	if (philo->eat_cnt == philo->info->num_must_eat
+		&& philo->info->num_must_eat != NO_OPTION)
+	{
+		philo->finished = true;
+	}
+	ft_usleep(philo->info->time_to_eat);
 }
 
 void
@@ -46,11 +57,11 @@ void
 	usleep(500);
 	while (true)
 	{
-		if (philo->info->someone_is_dead)
+		if (philo->finished)
 			return (NULL);
 		if (ft_check_if_dead(philo))
 		{
-			ft_philo_die(philo);
+			philo_do(philo, ST_DIE);
 			return (NULL);
 		}
 		usleep(200);
@@ -64,11 +75,11 @@ static void
 	pthread_t	monitor_tid;
 
 	if (pthread_create(&monitor_tid, NULL, monitor, philo))
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);	// TODO:
 	if (pthread_detach(monitor_tid))
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);	// TODO:
 	philo->last_ate = ft_get_mstime();
-	while (philo->info->someone_is_dead == false)
+	while (philo->finished == false)
 	{
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
@@ -76,13 +87,7 @@ static void
 			exit(EXIT_SUCCESS);
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
-		philo_do(philo, ST_EAT);
-		philo->last_ate = ft_get_mstime();
-		philo->eat_cnt++;
-		if (philo->eat_cnt < 0)
-			philo->eat_cnt = 0;
-		// TODO:
-		ft_usleep(info->time_to_eat);
+		ft_philo_eat(philo);
 		sem_post(info->forks_lock);
 		sem_post(info->forks_lock);
 		philo_do(philo, ST_SLEEP);
@@ -95,9 +100,10 @@ static void
 t_status
 	ft_start_philos(t_info *info, t_philo *philo)
 {
-	pid_t	pid;
-	int		wait_status;
-	int		i;
+	pid_t		pid;
+	int			wait_status;
+	t_status	status;
+	int			i;
 
 	i = -1;
 	philo->start_time = ft_get_mstime();
@@ -114,8 +120,26 @@ t_status
 		info->philo_pid[i] = pid;
 	}
 	waitpid(-1, &wait_status, 0);
-	i = -1;
-	while (++i < info->num_of_philo)
-		kill(info->philo_pid[i], SIGTERM);
-	return (SUCCESS);
+	status = SUCCESS;
+	i = 0;
+	if (WIFEXITED(wait_status))
+	{
+		if (WEXITSTATUS(wait_status) == EXIT_FAILURE
+			|| WEXITSTATUS(wait_status) == EXIT_SOMEONE_IS_DEAD)
+		{
+			if (WEXITSTATUS(wait_status) == EXIT_FAILURE)
+				status = FAILURE;
+			while (++i < info->num_of_philo)
+				kill(info->philo_pid[i], SIGTERM);
+		}
+		else
+		{
+			while (++i < info->num_of_philo)
+				waitpid(-1, &wait_status, 0);
+		}
+	}
+	else
+		while (++i < info->num_of_philo)
+			kill(info->philo_pid[i], SIGTERM);
+	return (status);
 }

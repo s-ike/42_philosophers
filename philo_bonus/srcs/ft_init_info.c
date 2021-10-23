@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/22 21:48:32 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 10:52:58 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,6 @@ static bool
 		sem_close(info->forks_lock);
 		return (false);
 	}
-	info->cnt_lock = sem_open(SEM_CNT, O_CREAT, S_IRWXU, 1);
-	if (info->cnt_lock == SEM_FAILED)
-	{
-		sem_close(info->forks_lock);
-		sem_close(info->print_lock);
-		return (false);
-	}
 	return (true);
 }
 
@@ -81,7 +74,6 @@ t_status
 	memset(info, 0, sizeof(t_info));
 	sem_unlink(SEM_FORKS);
 	sem_unlink(SEM_PRINT);
-	sem_unlink(SEM_CNT);
 	set_args_to_info(info, argc, argv);
 	if (is_positive_nums(info, argc)
 		&& is_succeeded_alloc_philo_pid(info)

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 12:08:09 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 13:43:18 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 14:00:00 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int
 	ft_puterror(const char *str)
 {
-	return (printf("%s%s%s\n", COLOR_BG_RED, str, COLOR_RESET));
+	return (printf("%s%s%s\n", COLOR_B_RED, str, COLOR_RESET));
 }
 
 int

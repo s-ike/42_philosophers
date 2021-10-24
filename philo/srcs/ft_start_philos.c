@@ -6,11 +6,18 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 16:41:33 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 18:51:57 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_start_philos.h"
+
+static void
+	philo_die(t_philo *philo)
+{
+	if (!philo->info->someone_is_dead)
+		ft_philo_do(philo, ST_DIE);
+}
 
 static void
 	*monitor(void *philo_p)
@@ -25,7 +32,7 @@ static void
 			return (NULL);
 		if (ft_check_if_dead(philo))
 		{
-			ft_philo_die(philo);
+			philo_die(philo);
 			return (NULL);
 		}
 		usleep(200);

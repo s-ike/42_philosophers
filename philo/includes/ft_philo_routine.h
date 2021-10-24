@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:55:22 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 22:50:00 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 18:52:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 bool	ft_check_if_dead(t_philo *philo);
 void	ft_philo_do(t_philo *philo, t_philo_status status);
 /* ft_philo_routin.c */
-void	ft_philo_die(t_philo *philo);
 void	ft_philo_routine(t_philo *philo);
 
 #endif

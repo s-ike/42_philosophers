@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 22:55:28 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 11:04:01 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ t_status
 	{
 		philos[i].last_ate = crnt_time;
 		if (pthread_create(&philos[i].thread, NULL, philo, (void *)&philos[i]))
-			return (FAILURE);
+			return (ft_puterror_and_return(ERR_THREAD, FAILURE));
 	}
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
 		if (pthread_join(philos[i].thread, NULL))
-			return (FAILURE);
+			return (ft_puterror_and_return(ERR_THREAD, FAILURE));
 	}
 	return (SUCCESS);
 }

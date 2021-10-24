@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_start_philos.h                                  :+:      :+:    :+:   */
+/*   ft_puterror.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 10:56:42 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 11:03:11 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/23 12:07:37 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/24 10:58:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_START_PHILOS_H
-# define FT_START_PHILOS_H
+#ifndef FT_PUTERROR_H
+# define FT_PUTERROR_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "def_error.h"
-# include "t_info.h"
-# include "t_philo.h"
-# include "t_status.h"
-# include "ft_philo_routine.h"
-# include "ft_puterror.h"
-# include "ft_time.h"
+# include <stdio.h>
+# include "def_color.h"
 
-t_status	ft_start_philos(t_info *info, t_philo *philos);
+int		ft_puterror(const char *str);
+int		ft_puterror_and_return(const char *str, int return_status);
+void	*ft_puterror_and_nullreturn(const char *str);
 
 #endif

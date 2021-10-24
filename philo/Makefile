@@ -12,6 +12,7 @@ SRCS		:= main.c \
 				ft_mutex_print.c \
 				ft_philo_routine.c \
 				ft_philo_routine2.c \
+				ft_puterror.c \
 				ft_start_philos.c \
 				ft_terminate.c \
 				ft_time.c \

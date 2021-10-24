@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_start_philos.h                                  :+:      :+:    :+:   */
+/*   def_error.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 10:56:42 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 11:03:11 by sikeda           ###   ########.fr       */
+/*   Created: 2021/10/23 14:08:27 by sikeda            #+#    #+#             */
+/*   Updated: 2021/10/24 10:51:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_START_PHILOS_H
-# define FT_START_PHILOS_H
+#ifndef DEF_ERROR_H
+# define DEF_ERROR_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "def_error.h"
-# include "t_info.h"
-# include "t_philo.h"
-# include "t_status.h"
-# include "ft_philo_routine.h"
-# include "ft_puterror.h"
-# include "ft_time.h"
+/*
+** program
+*/
+# define ERR "error"
+# define ERR_INVAL "invalid argument error"
 
-t_status	ft_start_philos(t_info *info, t_philo *philos);
+/*
+** system
+*/
+# define ERR_MALLOC "malloc error"
+# define ERR_THREAD "thread error"
+# define ERR_MUTEX_INIT "pthread_mutex_init error"
 
 #endif

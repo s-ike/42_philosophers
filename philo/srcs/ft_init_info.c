@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 22:26:50 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 10:53:07 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,16 @@ t_status
 		return (FAILURE);
 	memset(info, 0, sizeof(t_info));
 	info->someone_is_dead = false;
-	info->fork_lock = NULL;
 	set_args_to_info(info, argc, argv);
-	if (is_positive_nums(info, argc)
-		&& is_succeeded_init_fork_locks(info)
-		&& is_succeeded_init_mutex(info))
-		return (SUCCESS);
-	free(info->fork_lock);
-	return (FAILURE);
+	if (!is_positive_nums(info, argc))
+		return (ft_puterror_and_return(ERR_INVAL, FAILURE));
+	else if (!is_succeeded_init_fork_locks(info))
+		return (ft_puterror_and_return(ERR_MALLOC, FAILURE));
+	else if (!is_succeeded_init_mutex(info))
+	{
+		ft_puterror(ERR_MUTEX_INIT);
+		free(info->fork_lock);
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }

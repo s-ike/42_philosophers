@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 12:00:38 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 22:37:31 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 11:00:50 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_philo	*ft_init_philos(t_info *info)
 	int		i;
 
 	if (info->num_of_philo == 0)
-		return (NULL);
+		return (ft_puterror_and_nullreturn(ERR_INVAL));
 	philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
 	if (!philos)
-		return (NULL);
+		return (ft_puterror_and_nullreturn(ERR_MALLOC));
 	i = 0;
 	while (i < info->num_of_philo)
 	{

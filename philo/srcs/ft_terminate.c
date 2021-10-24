@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 23:06:21 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/16 14:09:11 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 22:27:02 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void
 	int	i;
 
 	pthread_mutex_destroy(&info->print_lock);
-	pthread_mutex_destroy(&info->cnt_lock);
 	i = -1;
 	while (++i < info->num_of_philo)
 		pthread_mutex_destroy(&info->fork_lock[i]);

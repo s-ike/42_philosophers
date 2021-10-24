@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 12:00:38 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/16 10:07:15 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 22:37:31 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_philo	*ft_init_philos(t_info *info)
 		philos[i].left_fork_id = id % info->num_of_philo;
 		philos[i].has_right_fork = false;
 		philos[i].has_left_fork = false;
+		philos[i].finished = false;
 		philos[i].eat_cnt = 0;
 		philos[i].last_ate = 0;
 		philos[i].info = info;

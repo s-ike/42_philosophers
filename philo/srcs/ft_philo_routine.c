@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 09:18:29 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 23:13:17 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 22:49:35 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void
 	ft_philo_die(t_philo *philo)
 {
-	if (philo->info->someone_is_dead == false)
+	if (!philo->info->someone_is_dead || !philo->finished)
 		ft_philo_do(philo, ST_DIE);
 }
 
@@ -49,19 +49,25 @@ static void
 	philo->has_left_fork = false;
 }
 
-static t_status
+static void
 	philo_action(t_philo *philo, t_philo_status status)
 {
-	t_status	eat_status;
-
 	if (status == ST_FORK)
 		philo_take_fork(philo, LEFT);
 	else if (status == ST_EAT)
 	{
-		eat_status = ft_philo_eat(philo);
+		ft_philo_do(philo, ST_EAT);
+		philo->last_ate = ft_get_mstime();
+		ft_usleep(philo->info->time_to_eat);
 		philo_drop_forks(philo);
-		if (eat_status == FAILURE)
-			return (FAILURE);
+		philo->eat_cnt++;
+		if (philo->eat_cnt < 0)
+			philo->eat_cnt = 0;
+		if (philo->eat_cnt == philo->info->num_must_eat
+			&& philo->info->num_must_eat != NO_OPTION)
+		{
+			philo->finished = true;
+		}
 	}
 	else if (status == ST_SLEEP)
 	{
@@ -70,7 +76,6 @@ static t_status
 	}
 	else
 		ft_philo_do(philo, status);
-	return (SUCCESS);
 }
 
 void
@@ -80,7 +85,7 @@ void
 
 	if (ft_iseven(philo->id))
 		usleep(200);
-	if (philo->info->someone_is_dead)
+	if (philo->info->someone_is_dead || philo->finished)
 		return ;
 	philo_take_fork(philo, RIGHT);
 	if (philo->left_fork_id == philo->right_fork_id)
@@ -91,10 +96,10 @@ void
 	else
 	{
 		status = ST_FORK;
-		while (!philo->info->someone_is_dead && status <= ST_THINK)
+		while (!philo->info->someone_is_dead && !philo->finished
+			&& status <= ST_THINK)
 		{
-			if (philo_action(philo, status) == FAILURE)
-				return ;
+			philo_action(philo, status);
 			status++;
 		}
 		philo_drop_forks(philo);

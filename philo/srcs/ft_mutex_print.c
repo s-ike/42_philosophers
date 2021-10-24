@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/17 17:23:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 10:33:09 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ void
 	ft_mutex_print(t_philo *philo, t_philo_status status)
 {
 	pthread_mutex_lock(&philo->info->print_lock);
-	if (status == ST_DIE && !philo->info->someone_is_dead)
+	if (status == ST_DIE && !philo->info->someone_is_dead && !philo->finished)
 	{
 		philo->info->someone_is_dead = true;
 		print(philo, ST_DIE);
 	}
-	else if (status == ST_END || !philo->info->someone_is_dead)
+	else if (status == ST_END
+		|| (!philo->info->someone_is_dead && !philo->finished))
+	{
 		print(philo, status);
+	}
 	pthread_mutex_unlock(&philo->info->print_lock);
 }

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/15 13:11:58 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/23 22:55:28 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void
 		return (NULL);
 	if (pthread_detach(monitor_tid))
 		return (NULL);
-	while (philo->info->someone_is_dead == false)
+	while (!philo->info->someone_is_dead && !philo->finished)
 		ft_philo_routine(philo);
 	return (NULL);
 }

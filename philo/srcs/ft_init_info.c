@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 10:53:07 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 16:38:06 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,18 @@ static bool
 
 	if (pthread_mutex_init(&info->print_lock, NULL))
 		return (false);
+	if (pthread_mutex_init(&info->cnt_lock, NULL))
+	{
+		pthread_mutex_destroy(&info->print_lock);
+		return (false);
+	}
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
 		if (pthread_mutex_init(&info->fork_lock[i], NULL))
 		{
 			pthread_mutex_destroy(&info->print_lock);
+			pthread_mutex_destroy(&info->cnt_lock);
 			while (0 <= i)
 				pthread_mutex_destroy(&info->fork_lock[i--]);
 			return (false);

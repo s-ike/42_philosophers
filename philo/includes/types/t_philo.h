@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 09:26:27 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 22:36:57 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 16:40:13 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_philo
 	int			left_fork_id;
 	bool		has_right_fork;
 	bool		has_left_fork;
-	bool		finished;
 	int64_t		eat_cnt;
 	pthread_t	thread;
 	t_time		last_ate;

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:47 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 22:28:26 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 16:36:34 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ typedef struct s_info
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_must_eat;
+	int				cnt_finished;
 	bool			someone_is_dead;
 	pthread_mutex_t	*fork_lock;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	cnt_lock;
 }	t_info;
 
 #endif

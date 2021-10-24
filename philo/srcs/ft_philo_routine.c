@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 09:18:29 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 12:43:45 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 16:45:02 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void
 	ft_philo_die(t_philo *philo)
 {
-	if (!philo->info->someone_is_dead || !philo->finished)
+	if (!philo->info->someone_is_dead)
 		ft_philo_do(philo, ST_DIE);
 }
 
@@ -66,7 +66,11 @@ static void
 		if (philo->eat_cnt == philo->info->num_must_eat
 			&& philo->info->num_must_eat != NO_OPTION)
 		{
-			philo->finished = true;
+			pthread_mutex_lock(&philo->info->cnt_lock);
+			philo->info->cnt_finished++;
+			if (philo->info->cnt_finished == philo->info->num_of_philo)
+				philo->info->someone_is_dead = true;
+			pthread_mutex_unlock(&philo->info->cnt_lock);
 		}
 	}
 	else if (status == ST_SLEEP)
@@ -85,7 +89,7 @@ void
 
 	if (ft_iseven(philo->id))
 		usleep(200);
-	if (philo->info->someone_is_dead || philo->finished)
+	if (philo->info->someone_is_dead)
 		return ;
 	philo_take_fork(philo, RIGHT);
 	if (philo->left_fork_id == philo->right_fork_id)

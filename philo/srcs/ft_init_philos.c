@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 12:00:38 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 12:40:47 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 16:40:40 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void
 	philo->left_fork_id = id % info->num_of_philo;
 	philo->has_right_fork = false;
 	philo->has_left_fork = false;
-	philo->finished = false;
 	philo->eat_cnt = 0;
 	philo->last_ate = 0;
 	philo->info = info;

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:40:50 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 15:18:04 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 18:47:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static t_status
 
 	waitpid(-1, &wait_status, 0);
 	if (info->eatcnt_pid)
+	{
 		kill(info->eatcnt_pid, SIGTERM);
+		info->eatcnt_pid = 0;
+	}
 	status = SUCCESS;
 	i = -1;
 	if (WIFEXITED(wait_status))
@@ -47,7 +50,7 @@ t_status
 
 	pid = fork();
 	if (pid < 0)
-		return (FAILURE);	// TODO:
+		return (ft_puterror_and_return(ERR_FORK, FAILURE));
 	else if (pid == 0)
 	{
 		i = -1;
@@ -71,7 +74,7 @@ t_status
 	{
 		pid = fork();
 		if (pid < 0)
-			return (FAILURE);	// TODO:
+			return (ft_puterror_and_return(ERR_FORK, FAILURE));
 		else if (pid == 0)
 		{
 			philo->id = i + 1;
@@ -79,6 +82,7 @@ t_status
 		}
 		info->philo_pid[i] = pid;
 	}
-	launch_eat_counter(info);
+	if (launch_eat_counter(info) == FAILURE)
+		kill(info->philo_pid[0], SIGKILL);
 	return (terminate_routine(info));
 }

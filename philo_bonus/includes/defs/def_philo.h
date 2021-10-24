@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:40 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 10:52:46 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 14:45:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 
 # define SEM_FORKS "/sem_forks"
 # define SEM_PRINT "/sem_print"
+# define SEM_EATCNT "/sem_eatcnt"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 23:06:21 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 21:38:29 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 15:08:37 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void
 {
 	sem_close(info->forks_lock);
 	sem_close(info->print_lock);
+	sem_close(info->eatcnt_lock);
 	sem_unlink(SEM_FORKS);
 	sem_unlink(SEM_PRINT);
+	sem_unlink(SEM_EATCNT);
 	free(info->philo_pid);
 }

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:40:50 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 14:29:43 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 15:18:04 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,43 @@ static t_status
 	int			i;
 
 	waitpid(-1, &wait_status, 0);
+	if (info->eatcnt_pid)
+		kill(info->eatcnt_pid, SIGTERM);
 	status = SUCCESS;
-	i = 0;
+	i = -1;
 	if (WIFEXITED(wait_status))
 	{
-		if (WEXITSTATUS(wait_status) == EXIT_FAILURE
-			|| WEXITSTATUS(wait_status) == EXIT_SOMEONE_IS_DEAD)
-		{
-			if (WEXITSTATUS(wait_status) == EXIT_FAILURE)
-				status = FAILURE;
-			while (++i < info->num_of_philo)
-				kill(info->philo_pid[i], SIGTERM);
-		}
-		else
-			while (++i < info->num_of_philo)
-				waitpid(-1, &wait_status, 0);
+		if (WEXITSTATUS(wait_status) == EXIT_FAILURE)
+			status = FAILURE;
+		while (++i < info->num_of_philo)
+			kill(info->philo_pid[i], SIGTERM);
 		return (status);
 	}
+	if (WIFSIGNALED(wait_status) && WTERMSIG(wait_status) == SIGTERM)
+		return (status);
 	while (++i < info->num_of_philo)
 		kill(info->philo_pid[i], SIGTERM);
 	return (status);
+}
+
+t_status
+	launch_eat_counter(t_info *info)
+{
+	pid_t	pid;
+	int		i;
+
+	pid = fork();
+	if (pid < 0)
+		return (FAILURE);	// TODO:
+	else if (pid == 0)
+	{
+		i = -1;
+		while (++i < info->num_of_philo)
+			sem_wait(info->eatcnt_lock);
+		exit(EXIT_SUCCESS);
+	}
+	info->eatcnt_pid = pid;
+	return (SUCCESS);
 }
 
 t_status
@@ -54,7 +71,7 @@ t_status
 	{
 		pid = fork();
 		if (pid < 0)
-			return (FAILURE);
+			return (FAILURE);	// TODO:
 		else if (pid == 0)
 		{
 			philo->id = i + 1;
@@ -62,5 +79,6 @@ t_status
 		}
 		info->philo_pid[i] = pid;
 	}
+	launch_eat_counter(info);
 	return (terminate_routine(info));
 }

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:53:45 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 12:18:46 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 16:11:58 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static bool
 static void
 	philo_do(t_philo *philo, t_philo_status status)
 {
-	if (philo->dead)
-		return ;
 	if (status != ST_DIE && check_if_dead(philo))
 		return ;
 	ft_sem_print(philo, status);
@@ -43,7 +41,7 @@ static void
 	if (philo->eat_cnt == philo->info->num_must_eat
 		&& philo->info->num_must_eat != NO_OPTION)
 	{
-		philo->finished = true;
+		sem_post(philo->info->eatcnt_lock);
 	}
 	ft_usleep(philo->info->time_to_eat);
 }
@@ -57,8 +55,6 @@ static void
 	usleep(500);
 	while (true)
 	{
-		if (philo->finished || philo->dead)
-			return (NULL);
 		if (check_if_dead(philo))
 		{
 			philo_do(philo, ST_DIE);
@@ -79,13 +75,13 @@ void
 	if (pthread_detach(monitor_tid))
 		exit(ft_puterror_and_return(ERR_THREAD, EXIT_FAILURE));
 	philo->last_ate = ft_get_mstime();
-	while (!philo->dead && !philo->finished)
+	while (true)
 	{
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
 		if (info->num_of_philo == 1)
 			while (true)
-				ft_usleep(500);
+				usleep(500);
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
 		philo_eat(philo);

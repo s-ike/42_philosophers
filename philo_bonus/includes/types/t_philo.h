@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 09:26:27 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 12:12:16 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 15:35:50 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 typedef struct s_philo
 {
 	int			id;
-	bool		dead;
-	bool		finished;
 	int64_t		eat_cnt;
 	t_time		start_time;
 	t_time		last_ate;

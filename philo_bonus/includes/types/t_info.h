@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 15:59:47 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 10:55:29 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 14:53:25 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ typedef struct s_info
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		num_must_eat;
+	pid_t	eatcnt_pid;
 	pid_t	*philo_pid;
 	sem_t	*forks_lock;
 	sem_t	*print_lock;
+	sem_t	*eatcnt_lock;
 }	t_info;
 
 #endif

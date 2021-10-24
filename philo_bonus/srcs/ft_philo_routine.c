@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:53:45 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/23 18:53:46 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 11:26:32 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
 		if (info->num_of_philo == 1)
-			exit(EXIT_SUCCESS);
+			while (true)
+				ft_usleep(500);
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);
 		philo_eat(philo);

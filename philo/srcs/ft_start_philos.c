@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 11:04:01 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 12:44:36 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void
 	usleep(500);
 	while (true)
 	{
-		if (philo->info->someone_is_dead)
+		if (philo->info->someone_is_dead || philo->finished)
 			return (NULL);
 		if (ft_check_if_dead(philo))
 		{

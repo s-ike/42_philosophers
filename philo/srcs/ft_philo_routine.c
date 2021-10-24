@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 09:18:29 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 11:19:54 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 12:43:45 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ void
 		while (!philo->info->someone_is_dead)
 			ft_usleep(500);
 	status = ST_FORK;
-	while (!philo->info->someone_is_dead && !philo->finished
-		&& status <= ST_THINK)
+	while (!philo->info->someone_is_dead && status <= ST_THINK)
 	{
 		philo_action(philo, status);
 		status++;

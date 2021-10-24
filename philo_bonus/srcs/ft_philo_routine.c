@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:53:45 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 11:26:32 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 12:18:46 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool
 static void
 	philo_do(t_philo *philo, t_philo_status status)
 {
-	if (philo->finished)
+	if (philo->dead)
 		return ;
 	if (status != ST_DIE && check_if_dead(philo))
 		return ;
@@ -57,7 +57,7 @@ static void
 	usleep(500);
 	while (true)
 	{
-		if (philo->finished)
+		if (philo->finished || philo->dead)
 			return (NULL);
 		if (check_if_dead(philo))
 		{
@@ -79,7 +79,7 @@ void
 	if (pthread_detach(monitor_tid))
 		exit(ft_puterror_and_return(ERR_THREAD, EXIT_FAILURE));
 	philo->last_ate = ft_get_mstime();
-	while (philo->finished == false)
+	while (!philo->dead && !philo->finished)
 	{
 		sem_wait(info->forks_lock);
 		philo_do(philo, ST_FORK);

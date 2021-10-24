@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 19:36:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 19:44:40 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_status
 {
 	int	i;
 
+	info->start_time = ft_get_mstime();
 	i = -1;
 	while (++i < info->num_of_philo)
 	{

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 16:40:48 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 19:46:48 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ static char
 static void
 	print(t_philo *philo, t_philo_status status)
 {
-	static t_time	start = 0;
 	const t_time	crnt_time = ft_get_mstime();
+	const t_time	elapsed_time = crnt_time - philo->info->start_time;
 
-	if (start == 0)
-		start = ft_get_mstime();
-	printf("%lld %d %s\n", crnt_time - start, philo->id, get_msg(status));
+	printf("%lld %d %s\n", elapsed_time, philo->id, get_msg(status));
 }
 
 void

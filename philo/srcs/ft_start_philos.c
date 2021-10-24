@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 11:05:37 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 18:51:57 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/24 19:36:13 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ static void
 static void
 	*philo(void *philo_p)
 {
-	t_philo		*philo;
-	pthread_t	monitor_tid;
+	t_philo			*philo;
+	pthread_t		monitor_tid;
+	const t_time	crnt_time = ft_get_mstime();
 
 	philo = (t_philo *)philo_p;
+	philo->last_ate = crnt_time;
 	if (pthread_create(&monitor_tid, NULL, monitor, philo))
 		return (NULL);
 	if (pthread_detach(monitor_tid))
@@ -59,13 +61,11 @@ static void
 t_status
 	ft_start_philos(t_info *info, t_philo *philos)
 {
-	const t_time	crnt_time = ft_get_mstime();
-	int				i;
+	int	i;
 
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
-		philos[i].last_ate = crnt_time;
 		if (pthread_create(&philos[i].thread, NULL, philo, (void *)&philos[i]))
 			return (ft_puterror_and_return(ERR_THREAD, FAILURE));
 	}

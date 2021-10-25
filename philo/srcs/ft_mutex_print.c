@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 15:19:20 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 19:46:48 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/25 17:59:29 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char
 	*get_msg(t_philo_status status)
 {
 	if (status == ST_DIE)
-		return (COLOR_RED"is died"COLOR_RESET);
+		return (COLOR_RED"died"COLOR_RESET);
 	else if (status == ST_FORK)
 		return (COLOR_CYAN"has taken a fork"COLOR_RESET);
 	else if (status == ST_EAT)

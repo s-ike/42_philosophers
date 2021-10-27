@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 14:47:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/27 13:00:00 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static bool
 	info->philo_pid = (pid_t *)malloc(sizeof(pid_t) * info->num_of_philo);
 	if (!info->philo_pid)
 		return (false);
+	memset(info->philo_pid, 0, sizeof(pid_t) * info->num_of_philo);
 	return (true);
 }
 

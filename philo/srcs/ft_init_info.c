@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 16:03:02 by sikeda            #+#    #+#             */
-/*   Updated: 2021/10/24 16:38:06 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/10/29 12:54:22 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_status
 	const bool	valid_args = ft_is_valid_arg_nums(argc, argv);
 
 	if (!valid_args)
-		return (FAILURE);
+		return (ft_puterror_and_return(ERR_INVAL, FAILURE));
 	memset(info, 0, sizeof(t_info));
 	info->someone_is_dead = false;
 	set_args_to_info(info, argc, argv);

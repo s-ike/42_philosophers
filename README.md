@@ -22,3 +22,5 @@ cd philo_bonus
 make
 ./philo 哲学者の人数 死ぬまでの時間 食事に費やす時間 睡眠に費やす時間 [それぞれの哲学者が最低何回食事するか]
 ```
+## Demo
+<img width="401" alt="スクリーンショット 2022-02-05 14 02 21" src="https://user-images.githubusercontent.com/13024418/152629398-67a6e855-5c3d-4a6b-9081-336eb7fbbe98.png">
